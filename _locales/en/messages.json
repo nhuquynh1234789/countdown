@@ -12,19 +12,19 @@
         "description": "title"
     },
     "time_day": {
-        "message": "Day(s)",
+        "message": "Days",
         "description": "timmer"
     },
     "time_hour": {
-        "message": "Hour(s)",
+        "message": "Hours",
         "description": "timmer"
     },
     "time_min": {
-        "message": "Min(s)",
+        "message": "Mins",
         "description": "timmer"
     },
     "time_sec": {
-        "message": "Sec(s)",
+        "message": "Secs",
         "description": "timmer"
     }
 }

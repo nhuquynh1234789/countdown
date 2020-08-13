@@ -41,12 +41,12 @@ async function getData(type) {
     switch (type) {
         case "ui":
             {
-                result = await fetch("https://raw.githubusercontent.com/NghiaCaNgao/countdown_json/master/data.json");
+                result = await fetch("https://raw.githubusercontent.com/NghiaCaNgao/countdown/master/data.json");
                 break;
             }
         case "time_mark":
             {
-                result = await fetch("https://raw.githubusercontent.com/NghiaCaNgao/countdown_json/master/time_mark.json");
+                result = await fetch("https://raw.githubusercontent.com/NghiaCaNgao/countdown/master/time_mark.json");
                 break;
             }
     }
