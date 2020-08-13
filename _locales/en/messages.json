@@ -1,0 +1,30 @@
+{
+    "exName": {
+        "message": "Countdown",
+        "description": "extension's name"
+    },
+    "exDescription": {
+        "message": "Countdown of national high school exam",
+        "description": "extenstion's description"
+    },
+    "exTitle": {
+        "message": "Pass our future!",
+        "description": "title"
+    },
+    "time_day": {
+        "message": "Day(s)",
+        "description": "timmer"
+    },
+    "time_hour": {
+        "message": "Hour(s)",
+        "description": "timmer"
+    },
+    "time_min": {
+        "message": "Min(s)",
+        "description": "timmer"
+    },
+    "time_sec": {
+        "message": "Sec(s)",
+        "description": "timmer"
+    }
+}

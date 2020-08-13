@@ -1,0 +1,379 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.align-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.align-space-evenly {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.flex-col {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.flex-row {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.sidebar_right {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  z-index: 600;
+}
+
+.sidebar_right > div {
+  width: 200px;
+}
+
+.sidebar_right > div .bookmark {
+  margin-top: 50px;
+  width: 100%;
+  border-radius: 7px;
+  background-color: #b91bb43f;
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-transition: background-color .2s;
+  transition: background-color .2s;
+}
+
+.sidebar_right > div .bookmark a,
+.sidebar_right > div .bookmark button {
+  border: none;
+  cursor: pointer;
+  display: block;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.sidebar_right > div .bookmark:hover {
+  background: linear-gradient(104deg, #f700d594 58%, #8800ff 100%);
+  -webkit-box-shadow: 7px 7px 30px 0px #b91bb5, -7px -7px 30px #f523f1;
+          box-shadow: 7px 7px 30px 0px #b91bb5, -7px -7px 30px #f523f1;
+  -webkit-backdrop-filter: none;
+          backdrop-filter: none;
+}
+
+.background_image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-filter: brightness(0.5);
+          filter: brightness(0.5);
+}
+
+.container {
+  padding: 10px;
+  width: 100vw;
+  height: 100vh;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow: hidden;
+  opacity: 1;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+
+.time_remaining {
+  font-family: 'Bungee', cursive;
+  position: relative;
+  overflow: hidden;
+  height: 280px;
+}
+
+.time_remaining .short_format {
+  position: relative;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  z-index: 600;
+}
+
+.time_remaining .short_format h1 {
+  padding: 0 20px 0 20px;
+  font-size: 120px;
+  color: white;
+  line-height: 150px;
+  overflow: hidden;
+}
+
+.time_remaining .short_format p {
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  background-color: white;
+  color: cornflowerblue;
+  text-align: center;
+}
+
+.time_remaining .detail_format {
+  position: relative;
+  color: white;
+  background-color: #7d7aa2;
+  margin-top: -40px;
+  border-radius: 0 0 7px 7px;
+  text-align: center;
+  opacity: 0;
+  -webkit-transition: margin-top .2s, opacity .2s;
+  transition: margin-top .2s, opacity .2s;
+  z-index: 500;
+}
+
+.time_remaining .detail_format > span {
+  margin: 5px;
+  padding: 0 5px 0 5px;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.time_remaining .detail_format > span:hover {
+  background-color: white;
+  color: #7d7aa2;
+}
+
+.time_remaining:hover {
+  overflow: hidden;
+}
+
+.time_remaining:hover .short_format {
+  border-radius: 7px 7px 0 0;
+  overflow: hidden;
+}
+
+.time_remaining:hover .detail_format {
+  margin-top: 0px;
+  opacity: 1;
+}
+
+.quote {
+  margin-top: 30px;
+  font-family: 'Pacifico', cursive;
+  max-width: 30%;
+  text-align: center;
+  color: white;
+  font-size: 1.5em;
+}
+
+.option {
+  z-index: 1000;
+  color: #f67e7d;
+  opacity: 0;
+  display: none;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+
+.option .panel {
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+  border-radius: 7px;
+  width: 60vw;
+}
+
+.option .panel .body_panel > div {
+  color: white;
+  font-family: 'Bungee', cursive;
+  background: linear-gradient(104deg, #f700d594 58%, #8800ff 100%);
+  border-radius: 7px;
+  margin: 30px 0 30px 0;
+  padding: 10px;
+  -webkit-box-shadow: 7px 7px 30px 0px #b91bb5, -7px -7px 30px #f523f1;
+          box-shadow: 7px 7px 30px 0px #b91bb5, -7px -7px 30px #f523f1;
+}
+
+.option .panel .body_panel > div > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 5px;
+}
+
+.option .panel .body_panel > div > div input[type=checkbox] {
+  height: 20px;
+}
+
+.option .panel .body_panel > div > div input[type=text],
+.option .panel .body_panel > div > div input[type=datetime-local],
+.option .panel .body_panel > div > div select {
+  height: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+.option .panel .body_panel > div > div .wraper_input_text {
+  position: relative;
+  width: 40%;
+}
+
+.option .panel .bottom_panel {
+  margin-top: 50px;
+  height: 60px;
+  width: 100%;
+}
+
+.option .panel .bottom_panel button {
+  height: 40px;
+  width: 100px;
+  font-family: 'Bungee', cursive;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5);
+  background-position: 0% 50%;
+  background-size: 600%;
+  border-radius: 20px;
+  float: right;
+  margin: 10px;
+  border: none;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.option .panel .bottom_panel button:focus {
+  outline: none;
+}
+
+.option .panel .bottom_panel button:hover {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+  background-position: 50% 100%;
+}
+
+.add_bookmark {
+  color: #f67e7d;
+  opacity: 0;
+  display: none;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+  z-index: 2000;
+}
+
+.add_bookmark .panel {
+  -webkit-box-shadow: #e1e6f973 0 0 13px 3px;
+          box-shadow: #e1e6f973 0 0 13px 3px;
+  background-color: white;
+  border-radius: 7px;
+  width: 60vh;
+}
+
+.add_bookmark .panel .body_panel > div {
+  color: #FF3D77;
+  font-family: 'Bungee', cursive;
+  padding: 10px;
+}
+
+.add_bookmark .panel .body_panel > div > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 5px;
+}
+
+.add_bookmark .panel .body_panel > div > div input[type=checkbox] {
+  height: 20px;
+}
+
+.add_bookmark .panel .body_panel > div > div input[type="text"] {
+  -webkit-box-shadow: #e1e6f973 0 0 13px 3px;
+          box-shadow: #e1e6f973 0 0 13px 3px;
+  border: none;
+  height: 30px;
+  padding: 0 5px;
+  border-radius: 5px;
+}
+
+.add_bookmark .panel .bottom_panel {
+  margin: 10px;
+  height: 60px;
+}
+
+.add_bookmark .panel .bottom_panel button {
+  height: 40px;
+  width: 100px;
+  margin: 10px;
+  float: right;
+  font-family: 'Bungee', cursive;
+  color: white;
+  cursor: pointer;
+  background: #c7d2fa;
+  border-radius: 20px;
+  border: none;
+  -webkit-transition: all .1s;
+  transition: all .1s;
+}
+
+.add_bookmark .panel .bottom_panel button:focus {
+  outline: none;
+}
+
+.add_bookmark .panel .bottom_panel button:hover {
+  background-color: #FF3D77;
+  -webkit-box-shadow: #ff3d777a 0 0 20px 3px;
+          box-shadow: #ff3d777a 0 0 20px 3px;
+}
+
+.option_wraper_actived {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  opacity: 1 !important;
+}
+
+.app_actived {
+  opacity: 0 !important;
+}
+/*# sourceMappingURL=styles.css.map */
