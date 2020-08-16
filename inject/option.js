@@ -1,7 +1,13 @@
 const btn_ok_add_bookmark = document.getElementById("btn_ok_add_bookmark");
 
 const BM_title = document.getElementById("BM_title")
-const BM_url = document.getElementById("BM_url")
+const BM_url = document.getElementById("BM_url");
+
+const is_time_server = document.getElementById("is_time_server");
+const is_static_image = document.getElementById("is_static_image");
+const tx_image_url = document.getElementById("tx_image_url");
+const sle_timer = document.getElementById("sle_timer");
+
 
 const bookmarkBar = document.getElementById("bookmarkBar");
 const background = document.getElementById("bg");
@@ -15,6 +21,7 @@ const tm_hours = document.getElementById("tm_hours");
 const tm_mins = document.getElementById("tm_mins");
 const tm_secs = document.getElementById("tm_secs");
 var TIME_MARK = 0;
+var dataST;
 
 delete_zone.addEventListener("dragover", function(event) {
     event.preventDefault();
@@ -24,6 +31,44 @@ delete_zone.addEventListener("drop", function(event) {
     prepareRemove(document.getElementById(data));
     event.preventDefault();
 });
+
+is_time_server.addEventListener("change", async function() {
+    sle_timer.disabled = is_time_server.checked;
+    let DTST = await getLocalData();
+    DTST.settings.time_server = is_time_server.checked;
+    dataST = DTST.settings;
+    setLocalData(DTST);
+    if (is_time_server) {
+        await processDataTM();
+        TIME_MARK = JSON.parse(window.localStorage.getItem("end_point"))
+    } else {
+        TIME_MARK = sle_timer.valueAsNumber;
+        window.localStorage.setItem("end_point", JSON.stringify(TIME_MARK));
+    }
+});
+
+sle_timer.addEventListener("change", function() {
+    TIME_MARK = sle_timer.valueAsNumber;
+    window.localStorage.setItem("end_point", JSON.stringify(TIME_MARK));
+});
+
+is_static_image.addEventListener("change", async function() {
+    tx_image_url.disabled = !is_static_image.checked;
+    let dataUI = await getLocalData();
+    dataUI.settings.is_static_image = is_static_image.checked;
+    if (is_static_image) {
+        dataUI.ui_daily.background.url = tx_image_url.value;
+        await setLocalData(dataUI);
+    } else {
+        await processDataUI();
+    }
+});
+
+tx_image_url.addEventListener("change", async function() {
+    let dataUI = await getLocalData();
+    dataUI.ui_daily.background.url = tx_image_url.value;
+    await setLocalData(dataUI);
+})
 async function addBookmark() {
     if (test(BM_title.value, BM_url.value)) {
         let el = {
@@ -35,7 +80,7 @@ async function addBookmark() {
         createBookmark(el);
         BM_url.value = "";
         BM_title.value = "";
-        let data = (await getLocalData());
+        let data = await getLocalData();
         data.bookmark.push(el);
         await setLocalData(data);
         bookmark_wraper.classList.remove("option_wraper_actived");
@@ -157,7 +202,9 @@ async function processDataUI() {
     let dataUI = JSON.parse(window.localStorage.getItem("ui"));
     let data = (await getLocalData());
     data.ui_daily.lastUpdate = (new Date).getTime();
-    data.ui_daily.background.url = dataUI.images[Math.round(Math.random() * dataUI.images.length)];
+    if (!dataST.is_static_image) {
+        data.ui_daily.background.url = dataUI.images[Math.round(Math.random() * dataUI.images.length)];
+    }
     data.ui_daily.quote.text = dataUI.quotes[Math.round(Math.random() * dataUI.quotes.length)];
     setLocalData(data);
 }
@@ -218,11 +265,13 @@ async function loadData() {
             await getDataUI();
             console.log("a");
         };
-        if (await isOldData("time_mark", 1)) {
-            await getDataTimeMark();
-            await processDataTM();
-            console.log("b")
-        };
+        if (dataST.time_server) {
+            if (await isOldData("time_mark", 1)) {
+                await getDataTimeMark();
+                await processDataTM();
+                console.log("b")
+            };
+        }
         if (await isOldData("ui_daily", 1)) {
             await processDataUI();
             await processDataTM();
@@ -238,15 +287,21 @@ function countdown() {
     let now = (new Date).getTime();
     let remain = Math.round((TIME_MARK - now) / 1000);
 
-    let days = Math.floor(remain / 86400);
-    let hours = Math.floor((remain % 86400) / 3600);
-    let mins = Math.floor(((remain % 86400) % 3600) / 60);
-    let secs = Math.floor(((remain % 86400) % 3600) % 60);
-
-    tm_days.innerHTML = days;
-    tm_hours.innerHTML = hours;
-    tm_mins.innerHTML = mins;
-    tm_secs.innerHTML = secs;
+    if (remain >= 0) {
+        let days = Math.floor(remain / 86400);
+        let hours = Math.floor((remain % 86400) / 3600);
+        let mins = Math.floor(((remain % 86400) % 3600) / 60);
+        let secs = Math.floor(((remain % 86400) % 3600) % 60);
+        tm_days.innerHTML = days;
+        tm_hours.innerHTML = hours;
+        tm_mins.innerHTML = mins;
+        tm_secs.innerHTML = secs
+    } else {
+        tm_days.innerHTML = "Congulate";
+        tm_hours.innerHTML = "0";
+        tm_mins.innerHTML = "0";
+        tm_secs.innerHTML = "0"
+    }
 }
 
 function PrepareCountdown() {
@@ -298,15 +353,36 @@ async function applyDataUI() {
     let dataUI = (await getLocalData()).ui_daily;
     let link = dataUI.background.url;
     let quote = dataUI.quote.text;
+
+    tx_image_url.value = link;
+    is_time_server.checked = dataST.time_server;
+    is_static_image.checked = dataST.is_static_image;
+    sle_timer.valueAsNumber = TIME_MARK;
+
+    if (dataST.time_server) {
+        sle_timer.disabled = true;
+    } else {
+        sle_timer.disabled = false;
+    }
+    if (dataST.is_static_image) {
+        tx_image_url.disabled = false;
+    } else {
+        tx_image_url.disabled = true;
+    }
     background.style.backgroundImage = `url("${link}")`;
     quotePragraph.innerHTML = quote;
 }
 
+async function loadSettings() {
+    dataST = (await getLocalData()).settings;
+}
+
 async function start() {
+    await loadSettings();
     await loadData();
-    await applyDataUI();
     await applyBookmark();
-    PrepareCountdown();
+    await PrepareCountdown();
+    await applyDataUI();
 }
 
 start();

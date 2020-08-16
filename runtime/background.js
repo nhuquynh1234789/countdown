@@ -66,7 +66,8 @@ function createDefaultData() {
             }
         ],
         settings: {
-
+            time_server: true,
+            is_static_image: false
         }
     }
     chrome.storage.sync.set({ data });

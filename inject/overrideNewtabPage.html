@@ -55,40 +55,25 @@
                 <div>
                     <div>
                         <span>Use time setting from server</span>
-                        <input type="checkbox" class="switch">
-                    </div>
-                    <div>
-                        <span>Format time</span>
-                        <div class="wraper_input_text">
-                            <select>
-                                    <option>a</option>
-                                    <option>a</option>
-                                </select>
-                        </div>
-                    </div>
-                    <div>
-                        <span>Quick select</span>
-                        <div class="wraper_input_text">
-                            <select>
-                                <option>a</option>
-                                <option>a</option>
-                            </select>
-                        </div>
+                        <input id="is_time_server" type="checkbox" class="switch">
                     </div>
                     <div>
                         <span>Chọn mốc thời gian</span>
                         <div class="wraper_input_text">
-                            <input type="datetime-local" class="effect-1">
+                            <input id="sle_timer" type="datetime-local" class="effect-1">
                             <span class="focus-border"></span>
                         </div>
                     </div>
-
                 </div>
                 <div>
                     <div>
                         <span>Background image static</span>
+                        <input id="is_static_image" type="checkbox" class="switch">
+                    </div>
+                    <div>
+                        <span>Url</span>
                         <div class="wraper_input_text">
-                            <input type="text" class="effect-1">
+                            <input id="tx_image_url" type="text" class="effect-1">
                             <span class="focus-border"></span>
                         </div>
                     </div>
@@ -96,7 +81,6 @@
 
             </div>
             <div class="bottom_panel">
-                <button>OK</button>
                 <button id="cancel_option">Cancel</button>
             </div>
         </div>
