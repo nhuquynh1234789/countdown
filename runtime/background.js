@@ -40,9 +40,6 @@ function createDefaultData() {
         ui: {
             lastUpdate: 0,
         },
-        time_mark: {
-            lastUpdate: 0,
-        },
         ui_daily: {
             lastUpdate: 0,
             background: {
@@ -52,6 +49,22 @@ function createDefaultData() {
                 text: ""
             },
         },
+        time_mark: {
+            lastUpdate: 0,
+        },
+        bookmark: [{
+                id: 377672,
+                title: "FB",
+                url: "https://www.facebook.com/",
+                icon_url: "https://www.google.com/s2/favicons?sz=64&domain_url=fb.com"
+            },
+            {
+                id: 231665,
+                title: "Google",
+                url: "https://www.google.com.vn",
+                icon_url: "https://www.google.com/s2/favicons?sz=64&domain_url=google.com.vn"
+            }
+        ],
         settings: {
 
         }

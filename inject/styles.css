@@ -51,7 +51,7 @@
 
 .sidebar_right {
   position: absolute;
-  top: 0;
+  top: 50px;
   right: 10px;
   z-index: 600;
 }
@@ -61,12 +61,9 @@
 }
 
 .sidebar_right > div .bookmark {
-  margin-top: 50px;
+  font-family: 'Bungee', cursive;
   width: 100%;
   border-radius: 7px;
-  background-color: #b91bb43f;
-  -webkit-backdrop-filter: blur(3px);
-          backdrop-filter: blur(3px);
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   -webkit-transition: background-color .2s;
@@ -75,22 +72,49 @@
 
 .sidebar_right > div .bookmark a,
 .sidebar_right > div .bookmark button {
-  border: none;
-  cursor: pointer;
-  display: block;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 80px;
+  width: 80px;
+  margin: 5px;
   overflow: hidden;
-  margin: 10px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
 }
 
-.sidebar_right > div .bookmark:hover {
-  background: linear-gradient(104deg, #f700d594 58%, #8800ff 100%);
-  -webkit-box-shadow: 7px 7px 30px 0px #b91bb5, -7px -7px 30px #f523f1;
-          box-shadow: 7px 7px 30px 0px #b91bb5, -7px -7px 30px #f523f1;
-  -webkit-backdrop-filter: none;
-          backdrop-filter: none;
+.sidebar_right > div .bookmark a:hover,
+.sidebar_right > div .bookmark button:hover {
+  background-color: rgba(255, 255, 255, 0.288);
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+}
+
+.sidebar_right > div .bookmark a img,
+.sidebar_right > div .bookmark button img {
+  border-radius: 50%;
+}
+
+.sidebar_right > div .bookmark button {
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.sidebar_right > div .bookmark button:hover {
+  background-color: white;
 }
 
 .background_image {
@@ -162,14 +186,15 @@
   z-index: 500;
 }
 
-.time_remaining .detail_format > span {
+.time_remaining .detail_format > span.TM {
+  width: 33%;
   margin: 5px;
   padding: 0 5px 0 5px;
   -webkit-transition: all .2s;
   transition: all .2s;
 }
 
-.time_remaining .detail_format > span:hover {
+.time_remaining .detail_format > span.TM:hover {
   background-color: white;
   color: #7d7aa2;
 }
@@ -207,13 +232,13 @@
 }
 
 .option .panel {
-  -webkit-backdrop-filter: blur(3px);
-          backdrop-filter: blur(3px);
   border-radius: 7px;
-  width: 60vw;
+  width: 40vw;
 }
 
 .option .panel .body_panel > div {
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
   color: white;
   font-family: 'Bungee', cursive;
   background: linear-gradient(104deg, #f700d594 58%, #8800ff 100%);
@@ -327,13 +352,24 @@
   height: 20px;
 }
 
-.add_bookmark .panel .body_panel > div > div input[type="text"] {
+.add_bookmark .panel .body_panel > div > div input[type="text"],
+.add_bookmark .panel .body_panel > div > div input[type="url"] {
   -webkit-box-shadow: #e1e6f973 0 0 13px 3px;
           box-shadow: #e1e6f973 0 0 13px 3px;
   border: none;
   height: 30px;
+  width: 60%;
   padding: 0 5px;
   border-radius: 5px;
+  margin-bottom: 7px;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.add_bookmark .panel .body_panel > div > div input[type="text"]:focus,
+.add_bookmark .panel .body_panel > div > div input[type="url"]:focus {
+  background-color: #7d7aa2;
+  color: white;
 }
 
 .add_bookmark .panel .bottom_panel {
@@ -375,5 +411,17 @@
 
 .app_actived {
   opacity: 0 !important;
+}
+
+#delete_zone {
+  font-family: 'Bungee', cursive;
+  background-color: #ff3d778a;
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 10px;
+  opacity: 0;
+  -webkit-transition: all .5s;
+  transition: all .5s;
 }
 /*# sourceMappingURL=styles.css.map */

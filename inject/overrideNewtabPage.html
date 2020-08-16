@@ -13,20 +13,16 @@
 <body>
     <!-- Background -->
     <div class="absolute background_image" id="bg"></div>
-    <!-- Statistic graphic -->
+    <!-- Bookmark -->
     <div class="sidebar_right">
         <div>
-            <div class="bookmark align-center flex-row">
-                <a href="fb.com">
-                    <img src="https://cdn3.iconfinder.com/data/icons/popular-services-brands/512/instagram-512.png" width="100%">
-                </a>
-                <a href="fb.com">
-                    <img src="https://cdn3.iconfinder.com/data/icons/popular-services-brands/512/instagram-512.png" width="100%">
-                </a>
-
+            <div class="bookmark align-center flex-row" id="bookmarkBar">
                 <button id="btn_add_bookmark">
-                    <img src="https://ir.ebaystatic.com/pictures/au/eplus/PlusIcon.png" width="100%">
+                    <img src="https://ir.ebaystatic.com/pictures/au/eplus/PlusIcon.png" width="50%">
                 </button>
+            </div>
+            <div id="delete_zone">
+                <p>Move to here to delete <span id="item_name"></span></p>
             </div>
         </div>
     </div>
@@ -36,24 +32,18 @@
             <div class="body_panel">
                 <div>
                     <div>
+                        <span>Title</span>
+                        <input id="BM_title" type="text">
+                    </div>
+                    <div>
                         <span>Url</span>
-                        <input type="text">
+                        <input id="BM_url" type="url">
                     </div>
-                </div>
 
-                <div>
-                    <div>
-                        <span>Use default icon</span>
-                        <input type="checkbox">
-                    </div>
-                    <div>
-                        <span>Link icon</span>
-                        <input type="text">
-                    </div>
                 </div>
             </div>
             <div class="bottom_panel">
-                <button>OK</button>
+                <button id="btn_ok_add_bookmark">OK</button>
                 <button id="btn_cancel_add_bookmark">Cancel</button>
             </div>
         </div>
@@ -64,14 +54,17 @@
             <div class="body_panel">
                 <div>
                     <div>
-                        <span>Online time statistic</span>
-                        <input type="checkbox" class="switch">
-                    </div>
-                </div>
-                <div>
-                    <div>
                         <span>Use time setting from server</span>
                         <input type="checkbox" class="switch">
+                    </div>
+                    <div>
+                        <span>Format time</span>
+                        <div class="wraper_input_text">
+                            <select>
+                                    <option>a</option>
+                                    <option>a</option>
+                                </select>
+                        </div>
                     </div>
                     <div>
                         <span>Quick select</span>
@@ -117,13 +110,13 @@
                     <p code="time_day"></p>
                 </div>
                 <div class="detail_format flex-row align-space-evenly">
-                    <span>
+                    <span class="TM">
                         <span id = "tm_hours"></span> <span code="time_hour"></span>
                     </span>
-                    <span>
+                    <span class="TM">
                         <span id = "tm_mins"></span> <span code="time_min"></span>
                     </span>
-                    <span>
+                    <span class="TM">
                         <span id = "tm_secs"></span> <span code="time_sec"></span>
                     </span>
                 </div>
@@ -135,6 +128,7 @@
     </div>
 </body>
 <script src="/_locales/lang.js"></script>
+<script src="./animation.js"></script>
 <script src="./option.js"></script>
 
 </html>

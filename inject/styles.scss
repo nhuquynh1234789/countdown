@@ -35,38 +35,50 @@ $purple: #7d7aa2;
     flex-direction: row;
 }
 
-// Side bar
+// Side bar bookmark
 .sidebar_right {
     position: absolute;
-    top: 0;
+    top: 50px;
     right: 10px;
     z-index: 600;
     >div {
         width: 200px;
         .bookmark {
-            margin-top: 50px;
+            font-family: 'Bungee', cursive;
             width: 100%;
             border-radius: 7px;
-            background-color: #b91bb43f;
-            backdrop-filter: blur(3px);
             flex-wrap: wrap;
             transition: background-color .2s;
             a,
             button {
-                border: none;
-                cursor: pointer;
-                display: block;
-                height: 30px;
-                width: 30px;
-                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                height: 80px;
+                width: 80px;
+                margin: 5px;
                 overflow: hidden;
-                margin: 10px;
+                border: none;
+                border-radius: 7px;
+                cursor: pointer;
+                color: white;
+                text-decoration: none;
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.288);
+                    backdrop-filter: blur(3px);
+                }
+                img {
+                    border-radius: 50%;
+                }
             }
-        }
-        .bookmark:hover {
-            background: linear-gradient(104deg, #f700d594 58%, #8800ff 100%);
-            box-shadow: 7px 7px 30px 0px #b91bb5, -7px -7px 30px #f523f1;
-            backdrop-filter: none;
+            button {
+                background-color: transparent;
+                border-radius: 50%;
+                &:hover {
+                    background-color: white;
+                }
+            }
         }
     }
 }
@@ -129,12 +141,13 @@ $purple: #7d7aa2;
         opacity: 0;
         transition: margin-top .2s, opacity .2s;
         z-index: 500;
-        >span {
+        >span.TM {
+            width: 33%;
             margin: 5px;
             padding: 0 5px 0 5px;
             transition: all .2s;
         }
-        >span:hover {
+        >span.TM:hover {
             background-color: white;
             color: $purple;
         }
@@ -170,11 +183,11 @@ $purple: #7d7aa2;
     display: none;
     transition: all .5s;
     .panel {
-        backdrop-filter: blur(3px);
         border-radius: 7px;
-        width: 60vw;
+        width: 40vw;
         .body_panel {
             >div {
+                backdrop-filter: blur(3px);
                 color: white;
                 font-family: 'Bungee', cursive;
                 background: linear-gradient(104deg, #f700d594 58%, rgba(136, 0, 255, 1) 100%);
@@ -259,12 +272,20 @@ $purple: #7d7aa2;
                     input[type=checkbox] {
                         height: 20px;
                     }
-                    input[type="text"] {
+                    input[type="text"],
+                    input[type="url"] {
                         box-shadow: #e1e6f973 0 0 13px 3px;
                         border: none;
                         height: 30px;
+                        width: 60%;
                         padding: 0 5px;
                         border-radius: 5px;
+                        margin-bottom: 7px;
+                        transition: all .2s;
+                        &:focus {
+                            background-color: #7d7aa2;
+                            color: white;
+                        }
                     }
                 }
             }
@@ -303,4 +324,15 @@ $purple: #7d7aa2;
 
 .app_actived {
     opacity: 0 !important;
+}
+
+#delete_zone {
+    font-family: 'Bungee', cursive;
+    background-color: #ff3d778a;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: all .5s;
 }

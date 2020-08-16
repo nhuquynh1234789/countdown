@@ -31,6 +31,7 @@
         "storage",
         "notifications",
         "https://raw.githubusercontent.com/*",
-        "https://i.imgur.com/"
+        "https://i.imgur.com/",
+        "https://www.google.com/"
     ]
 }

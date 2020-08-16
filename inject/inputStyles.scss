@@ -2,7 +2,7 @@
 // -input checkbox
 // -input radio
 // -input checkbox class switch
-// -input text|text area with span "focus boder" same level
+// -input text|text area with span "focus boder" same level and parent class "wraper_input_text"
 @supports(-webkit-appearance: none) or (-moz-appearance: none) {
     input[type='checkbox'],
     input[type='radio'] {
