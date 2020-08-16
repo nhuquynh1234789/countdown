@@ -112,10 +112,10 @@ function test(title, url) {
         alert("Khong dc de trang");
         return false
     }
-    if (url.search(/(chrome:\/\/)?/) >= 0) {
+    if (url.search(/chrome:\/\//g) >= 0) {
         alert("Ko nhap url thuoc ve chrome");
         return false;
-    } else if (url.search(/(https?:\/\/)?/g) < 0) {
+    } else if (url.search(/https?:\/\//g) < 0) {
         alert("Phai co http hoac https")
         return false;
     }
