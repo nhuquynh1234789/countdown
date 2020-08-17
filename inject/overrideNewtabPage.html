@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title code="exTitle"></title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./inputStyles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:ital,wght@1,500&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Background -->
+    <div class="absolute-full-screen background_image" id="bg"></div>
+    <!-- Bookmark -->
+    <div class="sidebar_right">
+        <!-- Bookmark Box -->
+        <div>
+            <div class="bookmark flex-align-center flex-row" id="bookmarkBar">
+                <button id="btn_add_bookmark">
+                    <img src="https://ir.ebaystatic.com/pictures/au/eplus/PlusIcon.png" width="50%">
+                </button>
+            </div>
+            <div id="delete_zone">
+                <p code="delete_zone_1"></p>
+            </div>
+        </div>
+    </div>
+    <!-- Add bookmark -->
+    <div class="absolute-full-screen option flex-align-center" id="bookmark_wraper">
+        <div class="panel">
+            <!-- Setting section -->
+            <div class="body_panel">
+                <!-- childen sections -->
+                <div>
+                    <!-- Settings -->
+                    <div>
+                        <span code="BM_title"></span>
+                        <input id="BM_title" type="text">
+                    </div>
+                    <div>
+                        <span code="BM_url"></span>
+                        <input id="BM_url" type="url">
+                    </div>
+                </div>
+            </div>
+            <!-- Button section -->
+            <div class="bottom_panel">
+                <button id="btn_ok_add_bookmark">OK</button>
+                <button id="btn_cancel_add_bookmark" code="cancel"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Option -->
+    <div class="absolute-full-screen option flex-align-center" id="option_wraper">
+        <div class="panel" id="option_panel">
+            <div class="body_panel">
+                <div>
+                    <div>
+                        <span code=ST_1></span>
+                        <input id="is_time_server" type="checkbox" class="switch">
+                    </div>
+                    <div>
+                        <span code="ST_2"></span>
+                        <input id="sle_timer" type="datetime-local">
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <span code="ST_3"></span>
+                        <input id="is_static_image" type="checkbox" class="switch">
+                    </div>
+                    <div>
+                        <span code="ST_4"></span>
+                        <input id="tx_image_url" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="bottom_panel">
+                <button id="cancel_option" code="cancel"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- App -->
+    <div class="container flex-align-center flex-col" id="app">
+        <div class="time_remaining" id="btn_option">
+            <div class="short_format">
+                <h1 id="tm_days"></h1>
+                <p code="time_day"></p>
+            </div>
+            <div class="detail_format flex-row align-space-evenly">
+                <div class="TM">
+                    <span id="tm_hours"></span> <span code="time_hour"></span>
+                </div>
+                <div class="TM">
+                    <span id="tm_mins"></span> <span code="time_min"></span>
+                </div>
+                <div class="TM">
+                    <span id="tm_secs"></span> <span code="time_sec"></span>
+                </div>
+            </div>
+        </div>
+        <div class="quote">
+            <p id="quote"></p>
+        </div>
+    </div>
+</body>
+<script src="/_locales/lang.js"></script>
+<script src="./animation.js"></script>
+<script src="./option.js"></script>
+
+</html>

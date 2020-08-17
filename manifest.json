@@ -1,0 +1,37 @@
+{
+    "manifest_version": 2,
+    "name": "__MSG_exName__",
+    "version": "0.0.1",
+
+    "default_locale": "en",
+    "description": "__MSG_exDescription__",
+    "icons": {
+        "16": "assets/images/favicon.png",
+        "48": "assets/images/favicon.png",
+        "128": "assets/images/favicon.png"
+    },
+
+    "browser_action": {
+        "default_icon": {
+            "16": "assets/images/favicon.png",
+            "24": "assets/images/favicon.png",
+            "32": "assets/images/favicon.png"
+        },
+        "default_title": "__MSG_exName__",
+        "default_popup": "popup/popup.html"
+    },
+    "background": {
+        "scripts": ["runtime/background.js"],
+        "persistent": false
+    },
+    "chrome_url_overrides": {
+        "newtab": "inject/overrideNewtabPage.html"
+    },
+    "permissions": [
+        "storage",
+        "notifications",
+        "https://raw.githubusercontent.com/*",
+        "https://i.imgur.com/",
+        "https://www.google.com/"
+    ]
+}
