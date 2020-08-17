@@ -6,11 +6,5 @@
     "exDescription": {
         "message": "Đếm ngược ngày thi THPT Quốc Gia",
         "description": "extenstion's description"
-    },
-    "as": {
-        "message": "hello"
-    },
-    "sd":{
-        "message": "blo"
     }
 }
