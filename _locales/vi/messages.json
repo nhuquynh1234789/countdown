@@ -8,40 +8,40 @@
         "description": "extenstion's description"
     },
     "exTitle": {
-        "message": "Pass our future!"
+        "message": "Vươn tới tương lai"
     },
     "time_day": {
-        "message": "Days"
+        "message": "Ngày"
     },
     "time_hour": {
-        "message": "Hours"
+        "message": "Giờ"
     },
     "time_min": {
-        "message": "Mins"
+        "message": "Phút"
     },
     "time_sec": {
-        "message": "Secs"
+        "message": "Giây"
     },
     "delete_zone": {
-        "message": "Move to here to delete"
+        "message": "Kéo vào đây để xóa"
     },
     "BM_title": {
-        "message": "title"
+        "message": "Tiêu đề"
     },
     "BM_url": {
         "message": "url"
     },
     "cancel": {
-        "message": "cancel"
+        "message": "Hủy"
     },
     "ST_1": {
-        "message": "Sync time"
+        "message": "Đồng bộ thời gian"
     },
     "ST_2": {
-        "message": "End at"
+        "message": "Kết thúc vào"
     },
     "ST_3": {
-        "message": "Static background image"
+        "message": "Ảnh nền tĩnh"
     },
     "ST_4": {
         "message": "Url"
