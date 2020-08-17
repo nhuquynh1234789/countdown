@@ -7,10 +7,44 @@
         "message": "Đếm ngược ngày thi THPT Quốc Gia",
         "description": "extenstion's description"
     },
-    "as": {
-        "message": "hello"
+    "exTitle": {
+        "message": "Vươn tới tương lai"
     },
-    "sd":{
-        "message": "blo"
+    "time_day": {
+        "message": "Ngày"
+    },
+    "time_hour": {
+        "message": "Giờ"
+    },
+    "time_min": {
+        "message": "Phút"
+    },
+    "time_sec": {
+        "message": "Giây"
+    },
+    "delete_zone": {
+        "message": "Kéo vào đây để xóa"
+    },
+    "BM_title": {
+        "message": "Tiêu đề"
+    },
+    "BM_url": {
+        "message": "url"
+    },
+    "cancel": {
+        "message": "Hủy"
+    },
+    "ST_1": {
+        "message": "Đồng bộ thời gian"
+    },
+    "ST_2": {
+        "message": "Kết thúc vào"
+    },
+    "ST_3": {
+        "message": "Ảnh nền tĩnh"
+    },
+    "ST_4": {
+        "message": "Url"
     }
+
 }
