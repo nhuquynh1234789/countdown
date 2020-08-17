@@ -1,13 +1,9 @@
 chrome.runtime.onInstalled.addListener(function(ev) {
     if (ev.reason === "install") {
         clearAllData();
-        chrome.storage.sync.get(function(data) { console.log(data) })
         createDefaultData();
         showNotification("Installed successfully", "You have install Countdown extenstion successfully");
     } else if (ev.reason === "update") {
-        clearAllData();
-        chrome.storage.sync.get(function(data) { console.log(data) })
-        createDefaultData();
         showNotification("Updated successfully", "You have updated Countdown extenstion successfully");
     }
 });

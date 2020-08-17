@@ -1,30 +1,48 @@
 {
     "exName": {
-        "message": "Countdown",
-        "description": "extension's name"
+        "message": "Countdown"
     },
     "exDescription": {
-        "message": "Countdown of national high school exam",
-        "description": "extenstion's description"
+        "message": "Countdown of national high school exam"
     },
     "exTitle": {
-        "message": "Pass our future!",
-        "description": "title"
+        "message": "Pass our future!"
     },
     "time_day": {
-        "message": "Days",
-        "description": "timmer"
+        "message": "Days"
     },
     "time_hour": {
-        "message": "Hours",
-        "description": "timmer"
+        "message": "Hours"
     },
     "time_min": {
-        "message": "Mins",
-        "description": "timmer"
+        "message": "Mins"
     },
     "time_sec": {
-        "message": "Secs",
-        "description": "timmer"
+        "message": "Secs"
+    },
+    "delete_zone": {
+        "message": "Move to here to delete"
+    },
+    "BM_title": {
+        "message": "title"
+    },
+    "BM_url": {
+        "message": "url"
+    },
+    "cancel": {
+        "message": "cancel"
+    },
+    "ST_1": {
+        "message": "Sync time"
+    },
+    "ST_2": {
+        "message": "End at"
+    },
+    "ST_3": {
+        "message": "Static background image"
+    },
+    "ST_4": {
+        "message": "Url"
     }
+
 }

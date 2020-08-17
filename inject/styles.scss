@@ -1,13 +1,31 @@
 $dark-blue:cornflowerblue;
 $pink: #f67e7d;
+$pink-strong: #FF3D77;
 $purple: #7d7aa2;
+$text-color-white: white;
 * {
     margin: 0;
     padding: 0;
 }
 
 // common class
-.absolute {
+.box-shadow-smoke {
+    box-shadow: 15px 15px 28px #ebebeb, -15px -15px 28px #ffffff;
+}
+
+.box-shadow-pink-strong {
+    box-shadow: #ff3d777a 0 0 20px 3px;
+}
+
+.font-bungee {
+    font-family: 'Bungee', cursive;
+}
+
+.font-pacifico {
+    font-family: 'Pacifico', cursive;
+}
+
+.absolute-full-screen {
     position: absolute;
     top: 0;
     left: 0;
@@ -15,15 +33,8 @@ $purple: #7d7aa2;
     height: 100vh;
 }
 
-.align-center {
+.flex {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.align-space-evenly {
-    display: flex;
-    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -35,6 +46,21 @@ $purple: #7d7aa2;
     flex-direction: row;
 }
 
+.flex-align-center {
+    justify-content: center;
+    @extend .flex;
+}
+
+.flex-align-space-evenly {
+    @extend .flex;
+    justify-content: space-evenly;
+}
+
+.flex-align-space-between {
+    @extend .flex;
+    justify-content: space-between;
+}
+
 // Side bar bookmark
 .sidebar_right {
     position: absolute;
@@ -44,17 +70,15 @@ $purple: #7d7aa2;
     >div {
         width: 200px;
         .bookmark {
-            font-family: 'Bungee', cursive;
+            @extend .font-bungee;
             width: 100%;
             border-radius: 7px;
             flex-wrap: wrap;
             transition: background-color .2s;
             a,
             button {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
+                @extend .flex-align-center;
+                @extend .flex-col;
                 height: 80px;
                 width: 80px;
                 margin: 5px;
@@ -62,7 +86,7 @@ $purple: #7d7aa2;
                 border: none;
                 border-radius: 7px;
                 cursor: pointer;
-                color: white;
+                color: $text-color-white;
                 text-decoration: none;
                 &:hover {
                     background-color: rgba(255, 255, 255, 0.288);
@@ -85,21 +109,87 @@ $purple: #7d7aa2;
 
 // background
 .background_image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
     z-index: -1;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: brightness(0.9);
+    filter: brightness(0.8);
+}
+
+//Bookmark and Settings
+.option {
+    opacity: 0;
+    display: none;
+    color: $pink;
+    transition: all .5s;
+    z-index: 2000;
+    .panel {
+        background-color: $text-color-white;
+        border-radius: 7px;
+        width: 55vh;
+        .body_panel {
+            >div {
+                color: $pink-strong;
+                @extend .font-bungee;
+                padding: 10px;
+                >div {
+                    @extend .flex-align-space-between;
+                    margin-bottom: 5px;
+                    input[type=checkbox] {
+                        height: 20px;
+                    }
+                    input[type="text"],
+                    input[type="url"],
+                    input[type="datetime-local"] {
+                        @extend .box-shadow-smoke;
+                        height: 30px;
+                        width: 60%;
+                        padding: 0 5px;
+                        margin-bottom: 7px;
+                        text-align: center;
+                        color: $purple;
+                        font-weight: 700;
+                        border: none;
+                        border-radius: 5px;
+                        transition: all .2s;
+                        background: #e1e6f9;
+                        &:focus {
+                            background-color: #b5c4fa;
+                            outline: none;
+                        }
+                    }
+                }
+            }
+        }
+        .bottom_panel {
+            height: 60px;
+            margin: 10px;
+            button {
+                margin: 10px;
+                height: 40px;
+                width: 100px;
+                float: right;
+                @extend .font-bungee;
+                color: $text-color-white;
+                cursor: pointer;
+                background: #c7d2fa;
+                border-radius: 20px;
+                border: none;
+                transition: all .1s;
+            }
+            button:focus {
+                outline: none;
+            }
+            button:hover {
+                background-color: $pink-strong;
+                @extend .box-shadow-pink-strong;
+            }
+        }
+    }
 }
 
 // time remaining
 .container {
-    padding: 10px;
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
@@ -109,8 +199,7 @@ $purple: #7d7aa2;
 }
 
 .time_remaining {
-    font-family: 'Bungee', cursive;
-    position: relative;
+    @extend .font-bungee;
     overflow: hidden;
     height: 280px;
     .short_format {
@@ -120,7 +209,7 @@ $purple: #7d7aa2;
         h1 {
             padding: 0 20px 0 20px;
             font-size: 120px;
-            color: white;
+            color: $text-color-white;
             line-height: 150px;
             overflow: hidden;
         }
@@ -133,30 +222,29 @@ $purple: #7d7aa2;
     }
     .detail_format {
         position: relative;
-        color: white;
-        background-color: $purple;
+        display: flex;
         margin-top: -40px;
-        border-radius: 0 0 7px 7px;
+        color: $text-color-white;
         text-align: center;
+        background-color: $purple;
+        border-radius: 0 0 7px 7px;
         opacity: 0;
         transition: margin-top .2s, opacity .2s;
         z-index: 500;
-        >span.TM {
-            width: 33%;
+        .TM {
+            flex: 1;
             margin: 5px;
             padding: 0 5px 0 5px;
             transition: all .2s;
         }
-        >span.TM:hover {
+        .TM:hover {
             background-color: white;
             color: $purple;
         }
     }
     &:hover {
-        overflow: hidden;
         .short_format {
             border-radius: 7px 7px 0 0;
-            overflow: hidden;
         }
         .detail_format {
             margin-top: 0px;
@@ -168,153 +256,11 @@ $purple: #7d7aa2;
 // Quote
 .quote {
     margin-top: 30px;
-    font-family: 'Pacifico', cursive;
+    @extend .font-pacifico;
     max-width: 30%;
     text-align: center;
     color: white;
     font-size: 1.5em;
-}
-
-//Option
-.option {
-    z-index: 1000;
-    color: $pink;
-    opacity: 0;
-    display: none;
-    transition: all .5s;
-    .panel {
-        border-radius: 7px;
-        width: 40vw;
-        .body_panel {
-            >div {
-                backdrop-filter: blur(3px);
-                color: white;
-                font-family: 'Bungee', cursive;
-                background: linear-gradient(104deg, #f700d594 58%, rgba(136, 0, 255, 1) 100%);
-                border-radius: 7px;
-                margin: 30px 0 30px 0;
-                padding: 10px;
-                box-shadow: 7px 7px 30px 0px #b91bb5, -7px -7px 30px #f523f1;
-                >div {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 5px;
-                    input[type=checkbox] {
-                        height: 20px;
-                    }
-                    input[type=text],
-                    input[type=datetime-local],
-                    select {
-                        height: 30px;
-                        width: 100%;
-                        text-align: center;
-                    }
-                    .wraper_input_text {
-                        position: relative;
-                        width: 40%;
-                    }
-                }
-            }
-        }
-        .bottom_panel {
-            margin-top: 50px;
-            height: 60px;
-            width: 100%;
-            button {
-                height: 40px;
-                width: 100px;
-                font-family: 'Bungee', cursive;
-                color: white;
-                cursor: pointer;
-                background: linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5);
-                background-position: 0% 50%;
-                background-size: 600%;
-                border-radius: 20px;
-                float: right;
-                margin: 10px;
-                border: none;
-                transition: all .2s;
-            }
-            button:focus {
-                outline: none;
-            }
-            button:hover {
-                transform: scale(0.95);
-                background-position: 50% 100%
-            }
-        }
-    }
-}
-
-// Bookmark
-.add_bookmark {
-    color: $pink;
-    opacity: 0;
-    display: none;
-    transition: all .5s;
-    z-index: 2000;
-    .panel {
-        box-shadow: #e1e6f973 0 0 13px 3px;
-        background-color: white;
-        border-radius: 7px;
-        width: 60vh;
-        .body_panel {
-            >div {
-                color: #FF3D77;
-                font-family: 'Bungee', cursive;
-                padding: 10px;
-                >div {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 5px;
-                    input[type=checkbox] {
-                        height: 20px;
-                    }
-                    input[type="text"],
-                    input[type="url"] {
-                        box-shadow: #e1e6f973 0 0 13px 3px;
-                        border: none;
-                        height: 30px;
-                        width: 60%;
-                        padding: 0 5px;
-                        border-radius: 5px;
-                        margin-bottom: 7px;
-                        transition: all .2s;
-                        &:focus {
-                            background-color: #7d7aa2;
-                            color: white;
-                        }
-                    }
-                }
-            }
-        }
-        .bottom_panel {
-            margin: 10px;
-            height: 60px;
-            button {
-                height: 40px;
-                width: 100px;
-                margin: 10px;
-                float: right;
-                font-family: 'Bungee', cursive;
-                color: white;
-                cursor: pointer;
-                background: #c7d2fa;
-                border-radius: 20px;
-                border: none;
-                transition: all .1s;
-            }
-            button:focus {
-                outline: none;
-            }
-            button:hover {
-                background-color: #FF3D77;
-                box-shadow: #ff3d777a 0 0 20px 3px;
-            }
-        }
-    }
 }
 
 .option_wraper_actived {
@@ -327,12 +273,13 @@ $purple: #7d7aa2;
 }
 
 #delete_zone {
-    font-family: 'Bungee', cursive;
+    @extend .font-bungee;
     background-color: #ff3d778a;
-    color: white;
+    color: $text-color-white;
     text-align: center;
     line-height: 50px;
     border-radius: 10px;
     opacity: 0;
     transition: all .5s;
+    overflow: hidden;
 }
