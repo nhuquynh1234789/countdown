@@ -1,13 +1,12 @@
 const btn_ok_add_bookmark = document.getElementById("btn_ok_add_bookmark");
 
-const BM_title = document.getElementById("BM_title")
-const BM_url = document.getElementById("BM_url");
+const input_bookmark_title = document.getElementById("input_bookmark_title")
+const input_bookmark_url = document.getElementById("input_bookmark_url");
+const input_end_time = document.getElementById("sle_timer");
+const input_static_image_url = document.getElementById("input_static_image_url");
 
-const is_time_server = document.getElementById("is_time_server");
-const is_static_image = document.getElementById("is_static_image");
-const tx_image_url = document.getElementById("tx_image_url");
-const sle_timer = document.getElementById("sle_timer");
-
+const switch_time_server = document.getElementById("switch_time_server");
+const switch_static_image = document.getElementById("switch_static_image");
 
 const bookmarkBar = document.getElementById("bookmarkBar");
 const background = document.getElementById("bg");
@@ -16,86 +15,13 @@ const item_name = document.getElementById("item_name");
 const delete_zone = document.getElementById("delete_zone");
 
 
-const tm_days = document.getElementById("tm_days");
-const tm_hours = document.getElementById("tm_hours");
-const tm_mins = document.getElementById("tm_mins");
-const tm_secs = document.getElementById("tm_secs");
+const remain_days = document.getElementById("tm_days");
+const remain_hours = document.getElementById("tm_hours");
+const remain_mins = document.getElementById("tm_mins");
+const remain_secs = document.getElementById("tm_secs");
+
 var TIME_MARK = 0;
 var dataST;
-
-delete_zone.addEventListener("dragover", function(event) {
-    event.preventDefault();
-});
-delete_zone.addEventListener("drop", function(event) {
-    let data = event.dataTransfer.getData("Text");
-    prepareRemove(document.getElementById(data));
-    event.preventDefault();
-});
-
-is_time_server.addEventListener("change", async function() {
-    sle_timer.disabled = is_time_server.checked;
-    let DTST = await getLocalData();
-    DTST.settings.time_server = is_time_server.checked;
-    dataST = DTST.settings;
-    setLocalData(DTST);
-    if (is_time_server) {
-        await processDataTM();
-        TIME_MARK = JSON.parse(window.localStorage.getItem("end_point"))
-    } else {
-        TIME_MARK = sle_timer.valueAsNumber;
-        window.localStorage.setItem("end_point", JSON.stringify(TIME_MARK));
-    }
-});
-
-sle_timer.addEventListener("change", function() {
-    TIME_MARK = sle_timer.valueAsNumber;
-    window.localStorage.setItem("end_point", JSON.stringify(TIME_MARK));
-});
-
-is_static_image.addEventListener("change", async function() {
-    tx_image_url.disabled = !is_static_image.checked;
-    let dataUI = await getLocalData();
-    dataUI.settings.is_static_image = is_static_image.checked;
-    if (is_static_image) {
-        dataUI.ui_daily.background.url = tx_image_url.value;
-        await setLocalData(dataUI);
-    } else {
-        await processDataUI();
-    }
-});
-
-tx_image_url.addEventListener("change", async function() {
-    let dataUI = await getLocalData();
-    dataUI.ui_daily.background.url = tx_image_url.value;
-    await setLocalData(dataUI);
-})
-async function addBookmark() {
-    if (test(BM_title.value, BM_url.value)) {
-        let el = {
-            title: BM_title.value,
-            url: BM_url.value,
-            icon_url: `https://www.google.com/s2/favicons?sz=64&domain_url=${BM_url.value}`,
-            id: generateID(6)
-        }
-        createBookmark(el);
-        BM_url.value = "";
-        BM_title.value = "";
-        let data = await getLocalData();
-        data.bookmark.push(el);
-        await setLocalData(data);
-        bookmark_wraper.classList.remove("option_wraper_actived");
-        app.classList.remove("app_actived");
-    } else return false
-}
-btn_ok_add_bookmark.addEventListener("click", async function() {
-    return addBookmark();
-});
-
-btn_ok_add_bookmark.addEventListener("keyup", async function(key) {
-    if (key.key == "Enter") {
-        return addBookmark();
-    }
-});
 
 function generateID(length) {
     let id = ""
@@ -107,7 +33,7 @@ function generateID(length) {
     } else return void 0
 }
 
-function test(title, url) {
+function isVaildInput(title, url) {
     if (title.trim() == "" || url.trim() == "") {
         alert("Khong dc de trang");
         return false
@@ -122,41 +48,9 @@ function test(title, url) {
     return true;
 }
 
-async function removeBookmark(id) {
-    let data = (await getLocalData());
-    let index = -1
-    for (i = 0; i < data.bookmark.length; i++) {
-        if (data.bookmark[i].id == id) {
-            index = i;
-            break;
-        }
-    }
-    if (index > -1) {
-        data.bookmark.splice(index, 1);
-        await setLocalData(data);
-    } else return false;
-    return true;
-}
-
-async function prepareRemove(elNode) {
-    if (elNode != void 0) {
-        await removeBookmark(elNode.id);
-        elNode.remove();
-    }
-
-}
-
 async function setLocalData(data) {
     chrome.storage.sync.set({ data: data });
 };
-
-async function getLocalData() {
-    return new Promise((resolve, reject) => {
-        chrome.storage.sync.get(function(data) {
-            resolve(data.data);
-        });
-    });
-}
 
 async function getData(type) {
     let result;
@@ -176,7 +70,13 @@ async function getData(type) {
     else return Promise.reject(result.statusText);
 }
 
-
+async function getLocalData() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get(function(data) {
+            resolve(data.data);
+        });
+    });
+}
 
 async function getDataUI() {
     let dataUI = await getData("ui");
@@ -198,20 +98,39 @@ async function getDataTimeMark() {
     }
 }
 
-async function processDataUI() {
-    let dataUI = JSON.parse(window.localStorage.getItem("ui"));
-    let data = (await getLocalData());
-    data.ui_daily.lastUpdate = (new Date).getTime();
-    if (!dataST.is_static_image) {
-        data.ui_daily.background.url = dataUI.images[Math.round(Math.random() * dataUI.images.length)];
+function countdown() {
+    let now = (new Date).getTime();
+    let remain = Math.round((TIME_MARK - now) / 1000);
+
+    if (remain >= 0) {
+        let days = Math.floor(remain / 86400);
+        let hours = Math.floor((remain % 86400) / 3600);
+        let mins = Math.floor(((remain % 86400) % 3600) / 60);
+        let secs = Math.floor(((remain % 86400) % 3600) % 60);
+        remain_days.innerHTML = days;
+        remain_hours.innerHTML = hours;
+        remain_mins.innerHTML = mins;
+        remain_secs.innerHTML = secs
+    } else {
+        remain_days.innerHTML = "Good luck";
+        remain_hours.innerHTML = "0";
+        remain_mins.innerHTML = "0";
+        remain_secs.innerHTML = "0"
     }
-    data.ui_daily.quote.text = dataUI.quotes[Math.round(Math.random() * dataUI.quotes.length)];
-    setLocalData(data);
 }
-async function processDataTM() {
-    let dataTM = JSON.parse(window.localStorage.getItem("time_mark"));
-    window.localStorage.setItem("end_point", JSON.stringify(dataTM.default));
+
+async function PrepareCountdown() {
+    if (TIME_MARK == void 0) processDataTM();
+
+    TIME_MARK = (await getLocalData()).endTime;
+    countdown();
+    setInterval(function() {
+        countdown();
+    }, 1000);
 }
+
+
+
 
 async function isOldData(type, compareByDays) {
     let lastUpdate = 0;
@@ -238,17 +157,12 @@ async function isOldData(type, compareByDays) {
                 break;
             }
         default:
-            {
-                return false;
-            }
+            return false;
     }
-
 
     if (type == "ui_daily") {
         let DayOfNow = (new Date()).getDate();
         let DayOfLastUpdate = (new Date(lastUpdate)).getDate();
-        console.log(DayOfNow);
-        console.log(DayOfLastUpdate);
         if (DayOfNow != DayOfLastUpdate) return true;
         else false
     } else {
@@ -257,6 +171,100 @@ async function isOldData(type, compareByDays) {
         if (distance >= compareByDays * 24 * 60 * 60) return true;
         else return false;
     }
+}
+
+async function addBookmark() {
+    let title = input_bookmark_title.value;
+    let url = input_bookmark_url.value;
+    if (isVaildInput(title, url)) {
+        let icon = `https://www.google.com/s2/favicons?sz=64&domain_url=${url}`;
+        let properties = {
+            title,
+            url,
+            icon,
+            id: generateID(6)
+        }
+        createBookmark(properties);
+
+        let data = await getLocalData();
+        data.bookmark.push(el);
+        await setLocalData(data);
+
+        //refresh input field
+        input_bookmark_url.value = "";
+        input_bookmark_title.value = "";
+        bookmark_wraper.classList.remove("option_wraper_actived");
+        app.classList.remove("app_actived");
+    } else return false
+}
+async function processDataUI() {
+    let dataUI = JSON.parse(window.localStorage.getItem("ui"));
+    let data = (await getLocalData());
+    data.ui_daily.lastUpdate = (new Date).getTime();
+    if (!dataST.is_static_image) {
+        data.ui_daily.background.url = dataUI.images[Math.round(Math.random() * dataUI.images.length)];
+    }
+    data.ui_daily.quote.text = dataUI.quotes[Math.round(Math.random() * dataUI.quotes.length)];
+    setLocalData(data);
+}
+async function processDataTM() {
+    let dataTM = JSON.parse(window.localStorage.getItem("time_mark"));
+    let data = await getLocalData();
+    data.endTime = dataTM.default;
+}
+
+async function removeBookmark(id) {
+    let data = (await getLocalData());
+    let index = -1
+    for (i = 0; i < data.bookmark.length; i++) {
+        if (data.bookmark[i].id == id) {
+            index = i;
+            break;
+        }
+    }
+    if (index > -1) {
+        data.bookmark.splice(index, 1);
+        await setLocalData(data);
+    } else return false;
+    return true;
+}
+
+async function prepareRemoveBookmark(elNode) {
+    if (elNode != void 0) {
+        await removeBookmark(elNode.id);
+        elNode.remove();
+    }
+}
+
+async function updateEndTime() {
+    let isCheck = switch_time_server.checked;
+    let data = await getLocalData();
+
+    if (isCheck) {
+        await processDataTM();
+        TIME_MARK = (await getLocalData()).endTime;
+    } else {
+        TIME_MARK = input_end_time.valueAsNumber;
+    }
+    data.settings.time_server = isSync;
+    dataST = data.settings;
+    data.endTime = TIME_MARK;
+    input_end_time.disabled = isCheck;
+    setLocalData(data);
+}
+
+async function updateStaticImage() {
+    let isCheck = switch_static_image.checked;;
+    let data = await getLocalData();
+
+    if (isCheck) {
+        data.ui_daily.background.url = input_static_image_url.value;
+    } else {
+        await processDataUI();
+    }
+    data.settings.switch_static_image = isCheck;
+    await setLocalData(data);
+    input_static_image_url.disabled = !isCheck
 }
 
 async function loadData() {
@@ -283,38 +291,7 @@ async function loadData() {
     }
 }
 
-function countdown() {
-    let now = (new Date).getTime();
-    let remain = Math.round((TIME_MARK - now) / 1000);
 
-    if (remain >= 0) {
-        let days = Math.floor(remain / 86400);
-        let hours = Math.floor((remain % 86400) / 3600);
-        let mins = Math.floor(((remain % 86400) % 3600) / 60);
-        let secs = Math.floor(((remain % 86400) % 3600) % 60);
-        tm_days.innerHTML = days;
-        tm_hours.innerHTML = hours;
-        tm_mins.innerHTML = mins;
-        tm_secs.innerHTML = secs
-    } else {
-        tm_days.innerHTML = "Congulate";
-        tm_hours.innerHTML = "0";
-        tm_mins.innerHTML = "0";
-        tm_secs.innerHTML = "0"
-    }
-}
-
-function PrepareCountdown() {
-    TIME_MARK = JSON.parse(window.localStorage.getItem("end_point"));
-    if (TIME_MARK == void 0) {
-        processDataTM();
-        TIME_MARK = JSON.parse(window.localStorage.getItem("end_point"));
-    }
-    countdown();
-    setInterval(function() {
-        countdown();
-    }, 1000);
-}
 
 function createBookmark(el) {
     let linkElement = document.createElement("a");
@@ -354,20 +331,20 @@ async function applyDataUI() {
     let link = dataUI.background.url;
     let quote = dataUI.quote.text;
 
-    tx_image_url.value = link;
-    is_time_server.checked = dataST.time_server;
-    is_static_image.checked = dataST.is_static_image;
-    sle_timer.valueAsNumber = TIME_MARK;
+    input_static_image_url.value = link;
+    switch_time_server.checked = dataST.time_server;
+    switch_static_image.checked = dataST.is_static_image;
+    input_end_time.valueAsNumber = TIME_MARK;
 
     if (dataST.time_server) {
-        sle_timer.disabled = true;
+        input_end_time.disabled = true;
     } else {
-        sle_timer.disabled = false;
+        input_end_time.disabled = false;
     }
     if (dataST.is_static_image) {
-        tx_image_url.disabled = false;
+        input_static_image_url.disabled = false;
     } else {
-        tx_image_url.disabled = true;
+        input_static_image_url.disabled = true;
     }
     background.style.backgroundImage = `url("${link}")`;
     quotePragraph.innerHTML = quote;
@@ -376,6 +353,42 @@ async function applyDataUI() {
 async function loadSettings() {
     dataST = (await getLocalData()).settings;
 }
+
+delete_zone.addEventListener("drop", function(event) {
+    let data = event.dataTransfer.getData("Text");
+    prepareRemoveBookmark(document.getElementById(data));
+    event.preventDefault();
+});
+
+delete_zone.addEventListener("dragover", function(event) {
+    event.preventDefault();
+});
+
+switch_static_image.addEventListener("change", async function() {
+    await updateStaticImage();
+});
+
+switch_time_server.addEventListener("change", async function() {
+    await updateEndTime();
+});
+
+input_end_time.addEventListener("change", async function() {
+    await updateEndTime();
+});
+
+input_static_image_url.addEventListener("change", async function() {
+    await updateStaticImage();
+});
+
+input_bookmark_url.addEventListener("keyup", async function(key) {
+    if (key.key == "Enter") {
+        return addBookmark();
+    }
+});
+
+btn_ok_add_bookmark.addEventListener("click", async function() {
+    return addBookmark();
+});
 
 async function start() {
     await loadSettings();
