@@ -6,6 +6,7 @@ function renderLangHTML() {
 }
 
 function renderLangJs(code) {
+    if ((code == void 0) || (code.trim() == "")) return;
     let ans = chrome.i18n.getMessage(code);
     if (ans == "") return
     else return ans
@@ -13,7 +14,6 @@ function renderLangJs(code) {
 
 function renderLang() {
     renderLangHTML();
-    renderLangJs();
 }
 
 renderLang();

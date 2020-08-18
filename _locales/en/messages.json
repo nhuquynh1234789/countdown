@@ -58,5 +58,14 @@
     },
     "_error_delete_bookmark": {
         "message": "Delete bookmark failed"
+    },
+    "_sync_time_now": {
+        "message": "Sync time now"
+    },
+    "_syncing_time": {
+        "message": "Syncing..."
+    },
+    "_sync_time_completed": {
+        "message": "Sync time completed"
     }
 }

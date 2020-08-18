@@ -45,6 +45,30 @@
     },
     "ST_4": {
         "message": "Url"
+    },
+    "_error_input_empty": {
+        "message": "NHập liệu không được để trống"
+    },
+    "_error_input_chrome": {
+        "message": "Url không thể thuộc về chrome://"
+    },
+    "_error_input_http": {
+        "message": "Url phải bao gồm http hoặc https"
+    },
+    "_error_load_data": {
+        "message": "Có lỗi phát sinh trong quá trình tải dữ liệu. Nhấn ctrl+shift+i, chụp lại màn hình và gửi cho chúng tôi để sửa lỗi này"
+    },
+    "_error_delete_bookmark": {
+        "message": "Xóa dấu trang không thành công"
+    },
+    "_sync_time_now": {
+        "message": "Cập nhật ngay"
+    },
+    "_syncing_time": {
+        "message": "Đang đồng bộ"
+    },
+    "_sync_time_completed": {
+        "message": "Cập nhật hoàn tất"
     }
 
 }

@@ -62,19 +62,19 @@ function createDefaultData() {
                 id: 377672,
                 title: "FB",
                 url: "https://www.facebook.com/",
-                icon_url: "https://www.google.com/s2/favicons?sz=64&domain_url=fb.com"
+                icon: "https://www.google.com/s2/favicons?sz=64&domain_url=fb.com"
             },
             {
                 id: 231665,
                 title: "Google",
                 url: "https://www.google.com.vn",
-                icon_url: "https://www.google.com/s2/favicons?sz=64&domain_url=google.com.vn"
+                icon: "https://www.google.com/s2/favicons?sz=64&domain_url=google.com.vn"
             }
         ],
 
         // settings
         settings: {
-            time_server: true,
+            is_time_server: true,
             is_static_image: false
         }
     }

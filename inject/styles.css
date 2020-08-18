@@ -15,7 +15,7 @@
           box-shadow: #ff3d777a 0 0 20px 3px;
 }
 
-.font-bungee, .sidebar_right > div .bookmark, .option .panel .body_panel > div, .option .panel .bottom_panel button, .time_remaining, #delete_zone {
+.font-bungee, .sidebar_right > div .bookmark, .option .panel .body_panel > div, .option .panel .body_panel > div > div button, .option .panel .bottom_panel button, .time_remaining, #delete_zone {
   font-family: 'Bungee', cursive;
 }
 
@@ -188,6 +188,26 @@
 .option .panel .body_panel > div > div input[type="datetime-local"]:focus {
   background-color: #b5c4fa;
   outline: none;
+}
+
+.option .panel .body_panel > div > div button {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-radius: 7px;
+  background-color: #f67e7d;
+  color: white;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  cursor: pointer;
+}
+
+.option .panel .body_panel > div > div button:focus {
+  outline: none;
+}
+
+.option .panel .body_panel > div > div button:hover {
+  background-color: #FF3D77;
 }
 
 .option .panel .bottom_panel {

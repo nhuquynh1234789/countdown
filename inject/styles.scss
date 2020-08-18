@@ -158,6 +158,23 @@ $text-color-white: white;
                             outline: none;
                         }
                     }
+                    button {
+                        width: 100%;
+                        padding: 5px;
+                        border: none;
+                        border-radius: 7px;
+                        background-color: #f67e7d;
+                        @extend .font-bungee;
+                        color: $text-color-white;
+                        transition: all .2s;
+                        cursor: pointer;
+                        &:focus {
+                            outline: none;
+                        }
+                        &:hover {
+                            background-color: $pink-strong;
+                        }
+                    }
                 }
             }
         }

@@ -1,4 +1,5 @@
 const btn_ok_add_bookmark = document.getElementById("btn_ok_add_bookmark");
+const btn_sync_time = document.getElementById("btn_sync_time");
 
 const input_bookmark_title = document.getElementById("input_bookmark_title")
 const input_bookmark_url = document.getElementById("input_bookmark_url");
@@ -177,8 +178,12 @@ async function processDataUI() {
 
 async function processDataTM() {
     let field = window.localStorage.getItem("time_mark");
-    if (field == void 0) field = await getDataTimeMark();
-    let dataTM = JSON.parse(field);
+    let dataTM;
+
+    if (field == void 0)
+        dataTM = await getDataTimeMark();
+    else
+        dataTM = JSON.parse(field);
 
     // save end of countdown to extesion storage
     let data = await getLocalData();
@@ -197,9 +202,9 @@ async function updateEndTime() {
     } else {
         // if not set TIME_MARK as custom settings
         TIME_MARK = input_end_time.valueAsNumber;
-        data.endTime = TIME_MARK;
+        data.end_time = TIME_MARK;
     }
-    data.settings.time_server = isCheck;
+    data.settings.is_time_server = isCheck;
     input_end_time.disabled = isCheck;
     setLocalData(data);
 }
@@ -214,7 +219,7 @@ async function updateStaticImage() {
     } else {
         await processDataUI();
     }
-    data.settings.switch_static_image = isCheck;
+    data.settings.is_static_image = isCheck;
     await setLocalData(data);
     input_static_image_url.disabled = !isCheck
 }
@@ -225,7 +230,7 @@ async function loadData() {
         if (await isOldData("ui_update", 60)) {
             await getDataUI();
         };
-        if (dataST.time_server) {
+        if (dataST.is_time_server) {
             if (await isOldData("time_mark", 1)) {
                 await getDataTimeMark();
                 await processDataTM();
@@ -248,11 +253,11 @@ async function applyDataUI() {
 
     // Fill info
     input_static_image_url.value = link;
-    switch_time_server.checked = dataST.time_server;
+    switch_time_server.checked = dataST.is_time_server;
     switch_static_image.checked = dataST.is_static_image;
     input_end_time.valueAsNumber = TIME_MARK;
 
-    if (dataST.time_server) {
+    if (dataST.is_time_server) {
         input_end_time.disabled = true;
     } else {
         input_end_time.disabled = false;
@@ -333,7 +338,7 @@ async function addBookmark() {
         createBookmark(properties);
 
         let data = await getLocalData();
-        data.bookmark.push(el);
+        data.bookmark.push(properties);
         await setLocalData(data);
 
         //refresh input field
@@ -352,7 +357,7 @@ function createBookmark(el) {
 
     let icon = document.createElement("img");
     icon.style.height = "40px"
-    icon.src = el.icon_url;
+    icon.src = el.icon;
 
     let name = document.createElement("span");
     name.innerHTML = el.title;
@@ -419,6 +424,12 @@ input_bookmark_url.addEventListener("keyup", async function(key) {
 
 btn_ok_add_bookmark.addEventListener("click", async function() {
     return addBookmark();
+});
+btn_sync_time.addEventListener("click", async function() {
+    this.innerHTML = renderLangJs("_syncing_time");
+    await processDataTM();
+    TIME_MARK = (await getLocalData()).end_time;
+    this.innerHTML = renderLangJs("_sync_time_completed");
 });
 
 async function start() {
