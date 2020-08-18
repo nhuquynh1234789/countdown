@@ -33,9 +33,12 @@ function showNotification(title, message) {
 
 function createDefaultData() {
     var data = {
+        // ui timestamp
         ui: {
             lastUpdate: 0,
         },
+
+        // daily image and quote
         ui_daily: {
             lastUpdate: 0,
             background: {
@@ -45,9 +48,16 @@ function createDefaultData() {
                 text: ""
             },
         },
+
+        // time mark timestamp
         time_mark: {
             lastUpdate: 0,
         },
+
+        // end of countdown
+        end_time: 0,
+
+        // bookmark 
         bookmark: [{
                 id: 377672,
                 title: "FB",
@@ -61,6 +71,8 @@ function createDefaultData() {
                 icon_url: "https://www.google.com/s2/favicons?sz=64&domain_url=google.com.vn"
             }
         ],
+
+        // settings
         settings: {
             time_server: true,
             is_static_image: false

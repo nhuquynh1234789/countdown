@@ -43,6 +43,20 @@
     },
     "ST_4": {
         "message": "Url"
+    },
+    "_error_input_empty": {
+        "message": "Input is empty"
+    },
+    "_error_input_chrome": {
+        "message": "Url mustn't belong to 'chrome://'"
+    },
+    "_error_input_http": {
+        "message": "Url must have 'http' or 'https'"
+    },
+    "_error_load_data": {
+        "message": "Have an error happened in loading data process. Please close this dialog, press 'ctrl+shift+i', capture your screen and send it to us to fix this problem. Thank!"
+    },
+    "_error_delete_bookmark": {
+        "message": "Delete bookmark failed"
     }
-
 }
