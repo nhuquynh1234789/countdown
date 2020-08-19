@@ -199,6 +199,8 @@ async function updateEndTime() {
     if (isCheck) {
         await processDataTM();
         TIME_MARK = (await getLocalData()).end_time;
+        data.end_time = TIME_MARK;
+        input_end_time.valueAsNumber = TIME_MARK;
     } else {
         // if not set TIME_MARK as custom settings
         TIME_MARK = input_end_time.valueAsNumber;
