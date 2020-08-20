@@ -30,6 +30,7 @@
     "permissions": [
         "storage",
         "notifications",
+        "contextMenus",
         "https://raw.githubusercontent.com/*",
         "https://i.imgur.com/",
         "https://www.google.com/"

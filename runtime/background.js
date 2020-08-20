@@ -1,17 +1,35 @@
-chrome.runtime.onInstalled.addListener(function(ev) {
-    if (ev.reason === "install") {
-        clearAllData();
-        createDefaultData();
-        showNotification("Installed successfully", "You have install Countdown extenstion successfully");
-    } else if (ev.reason === "update") {
-        showNotification("Updated successfully", "You have updated Countdown extenstion successfully");
-    }
-});
-chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {
-    if (buttonIndex == 0) {
-        window.open("", "blank");
-    }
-});
+// Set data to extension storage
+function setLocalData(data) {
+    chrome.storage.sync.set({ data: data });
+};
+
+// Get data from extension storage
+async function getLocalData() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get(function(data) {
+            resolve(data.data);
+        });
+    });
+}
+
+function isValidUrl(url) {
+    if (url.length > 250) {
+        alert("url too long");
+        return false;
+    } else return true;
+}
+
+async function setInDay(url) {
+    let data = await getLocalData();
+    data.ui_daily.background.url = url;
+    setLocalData(data);
+}
+async function setAllDays(url) {
+    let data = await getLocalData();
+    data.settings.is_static_image = !0;
+    data.ui_daily.background.url = url;
+    setLocalData(data);
+}
 
 function clearAllData() {
     chrome.storage.sync.clear();
@@ -80,3 +98,60 @@ function createDefaultData() {
     }
     chrome.storage.sync.set({ data });
 }
+
+chrome.runtime.onInstalled.addListener(function(ev) {
+    if (ev.reason === "install") {
+        clearAllData();
+        createDefaultData();
+        showNotification("Installed successfully", "You have install Countdown extenstion successfully");
+    } else if (ev.reason === "update") {
+        showNotification("Updated successfully", "You have updated Countdown extenstion successfully");
+    }
+});
+
+chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {
+    if (buttonIndex == 0) {
+        window.open("", "blank");
+    }
+});
+
+// Context menu
+// Clear context menu to create new
+chrome.contextMenus.removeAll();
+
+// Create context
+chrome.contextMenus.create({
+    type: "normal",
+    id: "set_in_day",
+    title: "In day",
+    visible: true,
+    contexts: ["image"]
+});
+
+chrome.contextMenus.create({
+    type: "normal",
+    id: "set_all_days",
+    title: "All days",
+    visible: true,
+    contexts: ["image"]
+});
+
+// Event handel
+chrome.contextMenus.onClicked.addListener(async function(info) {
+    switch (info.menuItemId) {
+        case "set_in_day":
+            {
+                if (isValidUrl(info.srcUrl))
+                    await setInDay(info.srcUrl);
+                break;
+            }
+        case "set_all_days":
+            {
+                if (isValidUrl(info.srcUrl))
+                    await setAllDays(info.srcUrl);
+                break;
+            }
+        default:
+            return;
+    }
+})
