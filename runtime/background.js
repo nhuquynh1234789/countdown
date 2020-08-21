@@ -99,6 +99,15 @@ function createDefaultData() {
     chrome.storage.sync.set({ data });
 }
 
+chrome.alarms.create("daily_infor", {
+    when: Date.now() + 1000,
+    periodInMinutes: 1
+});
+
+chrome.alarms.onAlarm.addListener(function() {
+    console.log("heelo");
+});
+
 chrome.runtime.onInstalled.addListener(function(ev) {
     if (ev.reason === "install") {
         clearAllData();

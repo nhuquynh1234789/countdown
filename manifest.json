@@ -25,12 +25,13 @@
         "persistent": false
     },
     "chrome_url_overrides": {
-        "newtab": "inject/overrideNewtabPage.html"
+        "newtab": "inject/new_tab/overrideNewtabPage.html"
     },
     "permissions": [
         "storage",
         "notifications",
         "contextMenus",
+        "alarms",
         "https://raw.githubusercontent.com/*",
         "https://i.imgur.com/",
         "https://www.google.com/"
