@@ -1,17 +1,3 @@
-// Set data to extension storage
-function setLocalData(data) {
-    chrome.storage.sync.set({ data: data });
-};
-
-// Get data from extension storage
-async function getLocalData() {
-    return new Promise((resolve, reject) => {
-        chrome.storage.sync.get(function(data) {
-            resolve(data.data);
-        });
-    });
-}
-
 function isValidUrl(url) {
     if (url.length > 250) {
         alert("url too long");
@@ -31,25 +17,33 @@ async function setAllDays(url) {
     setLocalData(data);
 }
 
-function clearAllData() {
-    chrome.storage.sync.clear();
+async function getTimeRemaining() {
+    await processDataTM();
+    return (await getLocalData()).end_time;
 }
 
-function showNotification(title, message) {
+async function getQuote() {
+    await processDataUI();
+    return (await getLocalData()).ui_daily.quote.text;
+}
+
+function clearNotification(id) {
+    chrome.notifications.clear(id);
+}
+
+function showNotification(title, message, buttons) {
     let options = {
         "type": "basic",
         "iconUrl": "./assets/images/favicon.png",
         "title": title,
         "message": message,
-        "buttons": [{
-            "title": "Change log",
-        }]
-
+        "buttons": buttons
     }
+    console.log(options);
     chrome.notifications.create(options);
 }
 
-function createDefaultData() {
+async function createDefaultData() {
     var data = {
         // ui timestamp
         ui: {
@@ -96,18 +90,26 @@ function createDefaultData() {
             is_static_image: false
         }
     }
-    chrome.storage.sync.set({ data });
+    await setLocalData(data)
 }
+// --------------------------------------
 
+// Inform daily
 chrome.alarms.create("daily_infor", {
-    when: Date.now() + 1000,
-    periodInMinutes: 1
+    when: Date.now() + 5000,
+    periodInMinutes: 1440
 });
 
-chrome.alarms.onAlarm.addListener(function() {
-    console.log("heelo");
+chrome.alarms.onAlarm.addListener(async function() {
+    await loadData();
+    let timeRemaining = await getTimeRemaining();
+    let quote = await getQuote();
+    showNotification("Remaining: " + timeRemaining.toString(), quote);
 });
+// --------------------------------------
 
+
+// When install, initial data
 chrome.runtime.onInstalled.addListener(function(ev) {
     if (ev.reason === "install") {
         clearAllData();
@@ -118,11 +120,8 @@ chrome.runtime.onInstalled.addListener(function(ev) {
     }
 });
 
-chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {
-    if (buttonIndex == 0) {
-        window.open("", "blank");
-    }
-});
+chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {});
+// --------------------------------------
 
 // Context menu
 // Clear context menu to create new

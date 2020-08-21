@@ -244,29 +244,6 @@ btn_sync_time.addEventListener("click", async function() {
     this.innerHTML = renderLangJs("_sync_time_completed");
 });
 
-
-async function loadData() {
-    dataST = (await getLocalData()).settings;
-    try {
-        if (await isOldData("ui_update", 60)) {
-            await getDataUI();
-        };
-        if (dataST.is_time_server) {
-            if (await isOldData("time_mark", 1)) {
-                await getDataTimeMark();
-                await processDataTM();
-            };
-        }
-        if (await isOldData("ui_daily", 1)) {
-            await processDataUI();
-            await processDataTM();
-        }
-    } catch (er) {
-        alert(renderLangJs("_error_load_data"));
-        console.log(er);
-    }
-}
-
 async function start() {
     await loadData();
     await applyAddBookmark();

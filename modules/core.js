@@ -72,7 +72,7 @@ async function isOldData(type, compareByDays) {
 
 // Set data to extension storage
 function setLocalData(data) {
-    chrome.storage.sync.set({ data: data });
+    chrome.storage.sync.set({ data });
 };
 
 // Get data from extension storage
@@ -137,7 +137,6 @@ async function checkDamagedData(type) {
     // Check whether data is lost and return full data
     // type = ui | time_mark
     let field = window.localStorage.getItem(type);
-    console.log(field);
     if (field == void 0) {
         if (type == "time_mark") data = await getDataTimeMark();
         else if (type == "ui") data = await getDataUI();
@@ -167,4 +166,29 @@ async function processDataTM() {
     let data = await getLocalData();
     data.end_time = dataTM.default;
     setLocalData(data);
+}
+
+async function loadData() {
+    dataST = (await getLocalData()).settings;
+    try {
+        if (await isOldData("ui_update", 60)) {
+            await getDataUI();
+            console.log("a");
+        };
+        if (dataST.is_time_server) {
+            if (await isOldData("time_mark", 1)) {
+                await getDataTimeMark();
+                await processDataTM();
+                console.log("b");
+            };
+        }
+        if (await isOldData("ui_daily", 1)) {
+            await processDataUI();
+            await processDataTM();
+            console.log("c");
+        }
+    } catch (er) {
+        alert(renderLangJs("_error_load_data"));
+        console.log(er);
+    }
 }
