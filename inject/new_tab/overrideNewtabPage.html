@@ -28,7 +28,7 @@
         </div>
     </div>
     <!-- Add bookmark -->
-    <div class="absolute-full-screen option flex-align-center" id="bookmark_wraper">
+    <div class="absolute-full-screen hidden-form flex-align-center" id="bookmark_wraper">
         <div class="panel">
             <!-- Setting section -->
             <div class="body_panel">
@@ -53,8 +53,15 @@
         </div>
     </div>
 
+    <!-- Status bar -->
+    <div class="status-bar">
+        <div class="option">
+            <button id="btn_option">Option</button>
+        </div>
+    </div>
+
     <!-- Option -->
-    <div class="absolute-full-screen option flex-align-center" id="option_wraper">
+    <div class="absolute-full-screen hidden-form flex-align-center" id="option_wraper">
         <div class="panel" id="option_panel">
             <div class="body_panel">
                 <div>
@@ -91,7 +98,7 @@
 
     <!-- App -->
     <div class="container flex-align-center flex-col" id="app">
-        <div class="time_remaining" id="btn_option">
+        <div class="time_remaining">
             <div class="short_format">
                 <h1 id="tm_days"></h1>
                 <p code="time_day"></p>

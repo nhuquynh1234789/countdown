@@ -4,8 +4,8 @@ const btn_cancel_option = document.getElementById("cancel_option");;
 const btn_cancel_add_bookmark = document.getElementById("btn_cancel_add_bookmark");
 
 const option_wraper = document.getElementById("option_wraper");
-const app = document.getElementById("app");
 const bookmark_wraper = document.getElementById("bookmark_wraper");
+const app = document.getElementById("app");
 
 btn_option.addEventListener("click", function() {
     option_wraper.classList.add("option_wraper_actived");

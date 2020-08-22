@@ -117,7 +117,7 @@ $text-color-white: white;
 }
 
 //Bookmark and Settings
-.option {
+.hidden-form {
     opacity: 0;
     display: none;
     color: $pink;
@@ -278,6 +278,38 @@ $text-color-white: white;
     text-align: center;
     color: white;
     font-size: 1.5em;
+}
+
+// Status bar
+.status-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100vw;
+    background-color: transparent;
+    .option {
+        margin-left: 30px;
+        button {
+            min-width: 100px;
+            border: white 2px solid;
+            border-radius: 20px;
+            @extend .font-bungee;
+            color: $text-color-white;
+            cursor: pointer;
+            background-color: transparent;
+            transition: all .2s;
+            &:focus {
+                outline: none;
+            }
+            &:hover {
+                border-color: $pink-strong;
+                background-color: $pink-strong;
+                color: $text-color-white;
+                @extend .box-shadow-pink-strong
+            }
+        }
+    }
 }
 
 .option_wraper_actived {

@@ -1,0 +1,130 @@
+body {
+  width: 300px;
+  scroll-behavior: smooth;
+}
+
+nav {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+nav > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 60px;
+}
+
+a.btn-icon {
+  display: block;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 10px;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+a.btn-icon.settings {
+  background-color: #32bea6;
+}
+
+a.btn-icon.settings:hover {
+  -webkit-box-shadow: #32bea6d6 0 0 12px;
+          box-shadow: #32bea6d6 0 0 12px;
+}
+
+a.btn-icon.contact {
+  background-color: #e6edb7;
+}
+
+a.btn-icon.contact:hover {
+  -webkit-box-shadow: #e6edb7d6 0 0 12px;
+          box-shadow: #e6edb7d6 0 0 12px;
+}
+
+a.btn-icon.shield {
+  background-color: #c0e5e4;
+}
+
+a.btn-icon.shield:hover {
+  -webkit-box-shadow: #c0e5e4d6 0 0 12px;
+          box-shadow: #c0e5e4d6 0 0 12px;
+}
+
+a.btn-icon:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.entry {
+  margin-top: 20px;
+  overflow: hidden;
+  border-radius: 7px;
+  border: #ffffff 2px solid;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.entry header {
+  background-color: #e91e635c;
+  padding-left: 10px;
+}
+
+.entry header h1 {
+  text-align: center;
+  color: white;
+  margin: 0;
+  line-height: 40px;
+}
+
+.entry .body_entry {
+  padding: 10px;
+}
+
+.entry .body_entry a,
+.entry .body_entry button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 30px;
+  padding-left: 10px;
+  margin-top: 10px;
+  text-decoration: none;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  cursor: pointer;
+}
+
+.entry .body_entry a.rectangle,
+.entry .body_entry button.rectangle {
+  border: #ff6565f0 1px solid;
+  border-radius: 7px;
+  color: #e91e63;
+  font-weight: 700;
+}
+
+.entry .body_entry a:hover,
+.entry .body_entry button:hover {
+  background-color: #ff6565f0;
+  color: white;
+}
+
+.entry:hover {
+  -webkit-box-shadow: #e91e6342 0 0 20px;
+          box-shadow: #e91e6342 0 0 20px;
+  border: #e91e635c 2px solid;
+}
+/*# sourceMappingURL=popup_styles.css.map */

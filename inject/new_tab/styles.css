@@ -3,19 +3,19 @@
   padding: 0;
 }
 
-.box-shadow-smoke, .option .panel .body_panel > div > div input[type="text"],
-.option .panel .body_panel > div > div input[type="url"],
-.option .panel .body_panel > div > div input[type="datetime-local"] {
+.box-shadow-smoke, .hidden-form .panel .body_panel > div > div input[type="text"],
+.hidden-form .panel .body_panel > div > div input[type="url"],
+.hidden-form .panel .body_panel > div > div input[type="datetime-local"] {
   -webkit-box-shadow: 15px 15px 28px #ebebeb, -15px -15px 28px #ffffff;
           box-shadow: 15px 15px 28px #ebebeb, -15px -15px 28px #ffffff;
 }
 
-.box-shadow-pink-strong, .option .panel .bottom_panel button:hover {
+.box-shadow-pink-strong, .hidden-form .panel .bottom_panel button:hover, .status-bar .option button:hover {
   -webkit-box-shadow: #ff3d777a 0 0 20px 3px;
           box-shadow: #ff3d777a 0 0 20px 3px;
 }
 
-.font-bungee, .sidebar_right > div .bookmark, .option .panel .body_panel > div, .option .panel .body_panel > div > div button, .option .panel .bottom_panel button, .time_remaining, #delete_zone {
+.font-bungee, .sidebar_right > div .bookmark, .hidden-form .panel .body_panel > div, .hidden-form .panel .body_panel > div > div button, .hidden-form .panel .bottom_panel button, .time_remaining, .status-bar .option button, #delete_zone {
   font-family: 'Bungee', cursive;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .flex, .flex-align-center, .sidebar_right > div .bookmark a,
-.sidebar_right > div .bookmark button, .flex-align-space-evenly, .flex-align-space-between, .option .panel .body_panel > div > div {
+.sidebar_right > div .bookmark button, .flex-align-space-evenly, .flex-align-space-between, .hidden-form .panel .body_panel > div > div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -69,7 +69,7 @@
           justify-content: space-evenly;
 }
 
-.flex-align-space-between, .option .panel .body_panel > div > div {
+.flex-align-space-between, .hidden-form .panel .body_panel > div > div {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -138,7 +138,7 @@
           filter: brightness(0.8);
 }
 
-.option {
+.hidden-form {
   opacity: 0;
   display: none;
   color: #f67e7d;
@@ -147,28 +147,28 @@
   z-index: 2000;
 }
 
-.option .panel {
+.hidden-form .panel {
   background-color: white;
   border-radius: 7px;
   width: 55vh;
 }
 
-.option .panel .body_panel > div {
+.hidden-form .panel .body_panel > div {
   color: #FF3D77;
   padding: 10px;
 }
 
-.option .panel .body_panel > div > div {
+.hidden-form .panel .body_panel > div > div {
   margin-bottom: 5px;
 }
 
-.option .panel .body_panel > div > div input[type=checkbox] {
+.hidden-form .panel .body_panel > div > div input[type=checkbox] {
   height: 20px;
 }
 
-.option .panel .body_panel > div > div input[type="text"],
-.option .panel .body_panel > div > div input[type="url"],
-.option .panel .body_panel > div > div input[type="datetime-local"] {
+.hidden-form .panel .body_panel > div > div input[type="text"],
+.hidden-form .panel .body_panel > div > div input[type="url"],
+.hidden-form .panel .body_panel > div > div input[type="datetime-local"] {
   height: 30px;
   width: 60%;
   padding: 0 5px;
@@ -183,14 +183,14 @@
   background: #e1e6f9;
 }
 
-.option .panel .body_panel > div > div input[type="text"]:focus,
-.option .panel .body_panel > div > div input[type="url"]:focus,
-.option .panel .body_panel > div > div input[type="datetime-local"]:focus {
+.hidden-form .panel .body_panel > div > div input[type="text"]:focus,
+.hidden-form .panel .body_panel > div > div input[type="url"]:focus,
+.hidden-form .panel .body_panel > div > div input[type="datetime-local"]:focus {
   background-color: #b5c4fa;
   outline: none;
 }
 
-.option .panel .body_panel > div > div button {
+.hidden-form .panel .body_panel > div > div button {
   width: 100%;
   padding: 5px;
   border: none;
@@ -202,20 +202,20 @@
   cursor: pointer;
 }
 
-.option .panel .body_panel > div > div button:focus {
+.hidden-form .panel .body_panel > div > div button:focus {
   outline: none;
 }
 
-.option .panel .body_panel > div > div button:hover {
+.hidden-form .panel .body_panel > div > div button:hover {
   background-color: #FF3D77;
 }
 
-.option .panel .bottom_panel {
+.hidden-form .panel .bottom_panel {
   height: 60px;
   margin: 10px;
 }
 
-.option .panel .bottom_panel button {
+.hidden-form .panel .bottom_panel button {
   margin: 10px;
   height: 40px;
   width: 100px;
@@ -229,11 +229,11 @@
   transition: all .1s;
 }
 
-.option .panel .bottom_panel button:focus {
+.hidden-form .panel .bottom_panel button:focus {
   outline: none;
 }
 
-.option .panel .bottom_panel button:hover {
+.hidden-form .panel .bottom_panel button:hover {
   background-color: #FF3D77;
 }
 
@@ -322,6 +322,40 @@
   text-align: center;
   color: white;
   font-size: 1.5em;
+}
+
+.status-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  width: 100vw;
+  background-color: transparent;
+}
+
+.status-bar .option {
+  margin-left: 30px;
+}
+
+.status-bar .option button {
+  min-width: 100px;
+  border: white 2px solid;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  background-color: transparent;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.status-bar .option button:focus {
+  outline: none;
+}
+
+.status-bar .option button:hover {
+  border-color: #FF3D77;
+  background-color: #FF3D77;
+  color: white;
 }
 
 .option_wraper_actived {
