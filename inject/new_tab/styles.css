@@ -5,7 +5,7 @@
 
 .box-shadow-smoke, .hidden-form .panel .body_panel > div > div input[type="text"],
 .hidden-form .panel .body_panel > div > div input[type="url"],
-.hidden-form .panel .body_panel > div > div input[type="datetime-local"] {
+.hidden-form .panel .body_panel > div > div input[type="datetime-local"], .hidden-form .panel .body_panel > div > div .input_file {
   -webkit-box-shadow: 15px 15px 28px #ebebeb, -15px -15px 28px #ffffff;
           box-shadow: 15px 15px 28px #ebebeb, -15px -15px 28px #ffffff;
 }
@@ -188,6 +188,36 @@
 .hidden-form .panel .body_panel > div > div input[type="datetime-local"]:focus {
   background-color: #b5c4fa;
   outline: none;
+}
+
+.hidden-form .panel .body_panel > div > div .input_file {
+  position: relative;
+  width: 60%;
+  height: 30px;
+  padding: 0 5px;
+  overflow: hidden;
+  margin-bottom: 7px;
+  border: none;
+  border-radius: 5px;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  background: #e1e6f9;
+  text-align: center;
+  color: #7d7aa2;
+  font-weight: 700;
+}
+
+.hidden-form .panel .body_panel > div > div .input_file input[type=file] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.hidden-form .panel .body_panel > div > div .input_file input[type=file] ~ span {
+  display: block;
+  height: 30px;
+  width: 100%;
 }
 
 .hidden-form .panel .body_panel > div > div button {

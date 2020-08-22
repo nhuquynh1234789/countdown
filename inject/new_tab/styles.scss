@@ -158,6 +158,33 @@ $text-color-white: white;
                             outline: none;
                         }
                     }
+                    .input_file {
+                        position: relative;
+                        width: 60%;
+                        height: 30px;
+                        padding: 0 5px;
+                        overflow: hidden;
+                        margin-bottom: 7px;
+                        border: none;
+                        border-radius: 5px;
+                        @extend .box-shadow-smoke;
+                        transition: all .2s;
+                        background: #e1e6f9;
+                        text-align: center;
+                        color: $purple;
+                        font-weight: 700;
+                        input[type=file] {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            opacity: 0;
+                            ~span {
+                                display: block;
+                                height: 30px;
+                                width: 100%;
+                            }
+                        }
+                    }
                     button {
                         width: 100%;
                         padding: 5px;

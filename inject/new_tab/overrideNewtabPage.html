@@ -64,11 +64,14 @@
     <div class="absolute-full-screen hidden-form flex-align-center" id="option_wraper">
         <div class="panel" id="option_panel">
             <div class="body_panel">
+                <!-- Sync time -->
                 <div>
                     <div>
                         <button id="btn_sync_time" code="_sync_time_now"></button>
                     </div>
                 </div>
+
+                <!-- Sync time -->
                 <div>
                     <div>
                         <span code=ST_1></span>
@@ -79,6 +82,8 @@
                         <input id="sle_timer" type="datetime-local">
                     </div>
                 </div>
+
+                <!-- Static image -->
                 <div>
                     <div>
                         <span code="ST_3"></span>
@@ -87,6 +92,14 @@
                     <div>
                         <span code="ST_4"></span>
                         <input id="input_static_image_url" type="text">
+                    </div>
+                    <div>
+                        <span code="ST_4"></span>
+                        <div class="input_file">
+                            <input id="input_image_file" type="file" accept="image/*">
+                            <span>select file</span>
+                        </div>
+
                     </div>
                 </div>
             </div>

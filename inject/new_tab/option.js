@@ -5,6 +5,7 @@ const input_bookmark_title = document.getElementById("input_bookmark_title")
 const input_bookmark_url = document.getElementById("input_bookmark_url");
 const input_end_time = document.getElementById("sle_timer");
 const input_static_image_url = document.getElementById("input_static_image_url");
+const input_image_file = document.getElementById("input_image_file");
 
 const switch_time_server = document.getElementById("switch_time_server");
 const switch_static_image = document.getElementById("switch_static_image");
@@ -242,6 +243,16 @@ btn_sync_time.addEventListener("click", async function() {
     await processDataTM();
     TIME_MARK = (await getLocalData()).end_time;
     this.innerHTML = renderLangJs("_sync_time_completed");
+});
+
+input_image_file.addEventListener("change", function() {
+    if (this.files.length > 0) {
+        let fileReader = new FileReader();
+        fileReader.readAsDataURL(this.files[0]);
+        fileReader.onload = function() {
+            console.log(fileReader.result);
+        }
+    }
 });
 
 async function start() {

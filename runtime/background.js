@@ -1,3 +1,71 @@
+// When install, initial data
+chrome.runtime.onInstalled.addListener(function(ev) {
+    if (ev.reason === "install") {
+        clearAllData();
+        createDefaultData();
+        showNotification("Installed successfully", "You have install Countdown extenstion successfully");
+    } else if (ev.reason === "update") {
+        showNotification("Updated successfully", "You have updated Countdown extenstion successfully");
+    }
+});
+
+chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {});
+// --------------------------------------
+
+// Context menu
+// Clear context menu to create new
+chrome.contextMenus.removeAll();
+// Create context
+chrome.contextMenus.create({
+    type: "normal",
+    id: "set_in_day",
+    title: "In day",
+    visible: true,
+    contexts: ["image"]
+});
+
+chrome.contextMenus.create({
+    type: "normal",
+    id: "set_all_days",
+    title: "All days",
+    visible: true,
+    contexts: ["image"]
+});
+
+// Event handel
+chrome.contextMenus.onClicked.addListener(async function(info) {
+    switch (info.menuItemId) {
+        case "set_in_day":
+            {
+                if (isValidUrl(info.srcUrl))
+                    await setInDay(info.srcUrl);
+                break;
+            }
+        case "set_all_days":
+            {
+                if (isValidUrl(info.srcUrl))
+                    await setAllDays(info.srcUrl);
+                break;
+            }
+        default:
+            return;
+    }
+});
+
+// Inform daily
+chrome.alarms.create("daily_infor", {
+    when: Date.now() + 1000,
+    periodInMinutes: 1440
+});
+
+chrome.alarms.onAlarm.addListener(async function() {
+    await loadData();
+    let timeRemaining = await getTimeRemaining();
+    let quote = await getQuote();
+    showNotification(timeRemaining + " days remaining", quote);
+});
+// --------------------------------------
+
 function isValidUrl(url) {
     if (url.length > 250) {
         alert("url too long");
@@ -19,7 +87,10 @@ async function setAllDays(url) {
 
 async function getTimeRemaining() {
     await processDataTM();
-    return (await getLocalData()).end_time;
+    let endTime = (await getLocalData()).end_time;
+    let remaining = Math.floor((endTime - Date.now()) / 1000);
+    if (remaining < 0) return "End up";
+    else return Math.floor(remaining / 86400).toString();
 }
 
 async function getQuote() {
@@ -29,6 +100,10 @@ async function getQuote() {
 
 function clearNotification(id) {
     chrome.notifications.clear(id);
+}
+
+function clearAllData() {
+    chrome.storage.sync.clear();
 }
 
 function showNotification(title, message, buttons) {
@@ -93,73 +168,3 @@ async function createDefaultData() {
     await setLocalData(data)
 }
 // --------------------------------------
-
-// Inform daily
-chrome.alarms.create("daily_infor", {
-    when: Date.now() + 5000,
-    periodInMinutes: 1440
-});
-
-chrome.alarms.onAlarm.addListener(async function() {
-    await loadData();
-    let timeRemaining = await getTimeRemaining();
-    let quote = await getQuote();
-    showNotification("Remaining: " + timeRemaining.toString(), quote);
-});
-// --------------------------------------
-
-
-// When install, initial data
-chrome.runtime.onInstalled.addListener(function(ev) {
-    if (ev.reason === "install") {
-        clearAllData();
-        createDefaultData();
-        showNotification("Installed successfully", "You have install Countdown extenstion successfully");
-    } else if (ev.reason === "update") {
-        showNotification("Updated successfully", "You have updated Countdown extenstion successfully");
-    }
-});
-
-chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {});
-// --------------------------------------
-
-// Context menu
-// Clear context menu to create new
-chrome.contextMenus.removeAll();
-
-// Create context
-chrome.contextMenus.create({
-    type: "normal",
-    id: "set_in_day",
-    title: "In day",
-    visible: true,
-    contexts: ["image"]
-});
-
-chrome.contextMenus.create({
-    type: "normal",
-    id: "set_all_days",
-    title: "All days",
-    visible: true,
-    contexts: ["image"]
-});
-
-// Event handel
-chrome.contextMenus.onClicked.addListener(async function(info) {
-    switch (info.menuItemId) {
-        case "set_in_day":
-            {
-                if (isValidUrl(info.srcUrl))
-                    await setInDay(info.srcUrl);
-                break;
-            }
-        case "set_all_days":
-            {
-                if (isValidUrl(info.srcUrl))
-                    await setAllDays(info.srcUrl);
-                break;
-            }
-        default:
-            return;
-    }
-})
