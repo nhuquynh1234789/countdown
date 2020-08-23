@@ -31,12 +31,6 @@ chrome.contextMenus.create({
 // Event handel
 chrome.contextMenus.onClicked.addListener(async function(info) {
     switch (info.menuItemId) {
-        case "set_in_day":
-            {
-                if (isValidUrl(info.srcUrl))
-                    await setInDay(info.srcUrl);
-                break;
-            }
         case "set_all_days":
             {
                 if (isValidUrl(info.srcUrl))
