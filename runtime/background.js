@@ -4,6 +4,10 @@ chrome.runtime.onInstalled.addListener(function(ev) {
         clearAllData();
         createDefaultData();
         showNotification("Installed successfully", "You have install Countdown extenstion successfully");
+        chrome.alarms.create("daily_infor", {
+            when: Date.now() + 1000,
+            periodInMinutes: 1440
+        });
     } else if (ev.reason === "update") {
         showNotification("Updated successfully", "You have updated Countdown extenstion successfully");
     }
@@ -16,14 +20,6 @@ chrome.notifications.onButtonClicked.addListener(function(notificationId, button
 // Clear context menu to create new
 chrome.contextMenus.removeAll();
 // Create context
-chrome.contextMenus.create({
-    type: "normal",
-    id: "set_in_day",
-    title: "In day",
-    visible: true,
-    contexts: ["image"]
-});
-
 chrome.contextMenus.create({
     type: "normal",
     id: "set_all_days",
@@ -53,11 +49,6 @@ chrome.contextMenus.onClicked.addListener(async function(info) {
 });
 
 // Inform daily
-chrome.alarms.create("daily_infor", {
-    when: Date.now() + 1000,
-    periodInMinutes: 1440
-});
-
 chrome.alarms.onAlarm.addListener(async function() {
     await loadData();
     let timeRemaining = await getTimeRemaining();
@@ -81,6 +72,7 @@ async function setInDay(url) {
 async function setAllDays(url) {
     let data = await getLocalData();
     data.settings.is_static_image = !0;
+    data.settings.is_static_image_device = !1;
     data.ui_daily.background.url = url;
     setLocalData(data);
 }
@@ -163,7 +155,7 @@ async function createDefaultData() {
         settings: {
             is_time_server: true,
             is_static_image: false,
-            is_static_image_local: false
+            is_static_image_device: false
         }
     }
     await setLocalData(data)
