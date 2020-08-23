@@ -141,7 +141,6 @@ $text-color-white: white;
                     input[type="text"],
                     input[type="url"],
                     input[type="datetime-local"] {
-                        @extend .box-shadow-smoke;
                         height: 30px;
                         width: 60%;
                         padding: 0 5px;
@@ -167,7 +166,6 @@ $text-color-white: white;
                         margin-bottom: 7px;
                         border: none;
                         border-radius: 5px;
-                        @extend .box-shadow-smoke;
                         transition: all .2s;
                         background: #e1e6f9;
                         text-align: center;

@@ -24,6 +24,19 @@ const remain_secs = document.getElementById("tm_secs");
 
 var TIME_MARK = 0;
 
+function isVaildImageUrl(url) {
+    return new Promise((resolve, reject) => {
+        let image = new Image();
+        image.src = url;
+        image.onload = function() {
+            resolve(!0)
+        };
+        image.onerror = function() {
+            resolve(!1);
+        }
+    })
+}
+
 async function updateEndTime() {
     let isCheck = switch_time_server.checked;
     let data = await getLocalData();
@@ -50,17 +63,32 @@ async function updateStaticImage() {
 
     // if user turn on static image settings, use custom url image
     if (isCheck) {
-        data.ui_daily.background.url = input_static_image_url.value;
+        if (input_image_file.files.length > 0) {
+            data.settings.is_static_image_device = !0;
+            data.ui_daily.background.url = input_image_file.files[0].name;
+        } else {
+            let isValid = await isVaildImageUrl(input_static_image_url.value);
+            if (isValid) {
+                data.settings.is_static_image_device = !1;
+                data.ui_daily.background.url = input_static_image_url.value;
+            } else {
+                alert(renderLangJs("_error_invaild_url"));
+            }
+        }
+
     } else {
         await processDataUI();
     }
     data.settings.is_static_image = isCheck;
     await setLocalData(data);
-    input_static_image_url.disabled = !isCheck
+    input_static_image_url.disabled = !isCheck;
+    input_image_file.disabled = !isCheck;
 }
 
 async function applyDataUI() {
-    let dataUI = (await getLocalData()).ui_daily;
+    let data = await getLocalData();
+    let dataUI = data.ui_daily;
+    let dataST = data.settings;
     let link = dataUI.background.url;
     let quote = dataUI.quote.text;
 
@@ -70,17 +98,17 @@ async function applyDataUI() {
     switch_static_image.checked = dataST.is_static_image;
     input_end_time.valueAsNumber = TIME_MARK;
 
-    if (dataST.is_time_server) {
-        input_end_time.disabled = true;
+    input_end_time.disabled = dataST.is_time_server;
+    input_static_image_url.disabled = !dataST.is_static_image;
+    input_image_file.disabled = !dataST.is_static_image;
+
+    if (data.settings.is_static_image_device) {
+        let img_device = window.localStorage.getItem("device_image");
+        background.style.backgroundImage = `url("${img_device}")`;
     } else {
-        input_end_time.disabled = false;
+        background.style.backgroundImage = `url("${link}")`;
     }
-    if (dataST.is_static_image) {
-        input_static_image_url.disabled = false;
-    } else {
-        input_static_image_url.disabled = true;
-    }
-    background.style.backgroundImage = `url("${link}")`;
+
     quotePragraph.innerHTML = quote;
 }
 
@@ -223,12 +251,28 @@ switch_time_server.addEventListener("change", async function() {
     await updateEndTime();
 });
 
+input_static_image_url.addEventListener("change", async function() {
+    await updateStaticImage();
+});
+
 input_end_time.addEventListener("change", async function() {
     await updateEndTime();
 });
 
-input_static_image_url.addEventListener("change", async function() {
-    await updateStaticImage();
+
+
+input_image_file.addEventListener("change", async function() {
+    if (this.files.length > 0) {
+        let fileReader = new FileReader();
+        fileReader.readAsDataURL(this.files[0]);
+        fileReader.onload = async function() {
+            window.localStorage.setItem("device_image", fileReader.result);
+            input_static_image_url.value = input_image_file.files[0].name;
+            await updateStaticImage();
+            await applyDataUI();
+        }
+    }
+
 });
 
 input_bookmark_url.addEventListener("keyup", async function(key) {
@@ -245,15 +289,7 @@ btn_sync_time.addEventListener("click", async function() {
     this.innerHTML = renderLangJs("_sync_time_completed");
 });
 
-input_image_file.addEventListener("change", function() {
-    if (this.files.length > 0) {
-        let fileReader = new FileReader();
-        fileReader.readAsDataURL(this.files[0]);
-        fileReader.onload = function() {
-            console.log(fileReader.result);
-        }
-    }
-});
+
 
 async function start() {
     await loadData();

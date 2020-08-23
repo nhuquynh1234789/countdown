@@ -3,9 +3,7 @@
   padding: 0;
 }
 
-.box-shadow-smoke, .hidden-form .panel .body_panel > div > div input[type="text"],
-.hidden-form .panel .body_panel > div > div input[type="url"],
-.hidden-form .panel .body_panel > div > div input[type="datetime-local"], .hidden-form .panel .body_panel > div > div .input_file {
+.box-shadow-smoke {
   -webkit-box-shadow: 15px 15px 28px #ebebeb, -15px -15px 28px #ffffff;
           box-shadow: 15px 15px 28px #ebebeb, -15px -15px 28px #ffffff;
 }

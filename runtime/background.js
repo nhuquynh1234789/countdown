@@ -162,7 +162,8 @@ async function createDefaultData() {
         // settings
         settings: {
             is_time_server: true,
-            is_static_image: false
+            is_static_image: false,
+            is_static_image_local: false
         }
     }
     await setLocalData(data)

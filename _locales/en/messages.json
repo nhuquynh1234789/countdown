@@ -59,6 +59,9 @@
     "_error_delete_bookmark": {
         "message": "Delete bookmark failed"
     },
+    "_error_invaild_url": {
+        "message": "Invalid image url. Please check and type again"
+    },
     "_sync_time_now": {
         "message": "Sync time now"
     },
