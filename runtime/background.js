@@ -28,6 +28,13 @@ chrome.contextMenus.create({
     contexts: ["image"]
 });
 
+chrome.contextMenus.create({
+    "type": "normal",
+    "title": "Full settings",
+    "contexts": ["browser_action"],
+    "id": "settings"
+});
+
 // Event handel
 chrome.contextMenus.onClicked.addListener(async function(info) {
     switch (info.menuItemId) {
@@ -35,6 +42,11 @@ chrome.contextMenus.onClicked.addListener(async function(info) {
             {
                 if (isValidUrl(info.srcUrl))
                     await setAllDays(info.srcUrl);
+                break;
+            }
+        case "settings":
+            {
+                window.open("/options/options.html", "_blank");
                 break;
             }
         default:
