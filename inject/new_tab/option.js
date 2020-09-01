@@ -259,8 +259,6 @@ input_end_time.addEventListener("change", async function() {
     await updateEndTime();
 });
 
-
-
 input_image_file.addEventListener("change", async function() {
     if (this.files.length > 0) {
         let fileReader = new FileReader();

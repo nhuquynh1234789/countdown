@@ -34,6 +34,15 @@
         ],
         "persistent": false
     },
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "css": [
+            "inject/all_tabs/content.css"
+        ],
+        "js": ["modules/core.js",
+            "inject/all_tabs/content.js"
+        ]
+    }],
 
     "options_page": "options/options.html",
     "options_ui": {
@@ -47,6 +56,7 @@
         "notifications",
         "contextMenus",
         "alarms",
+        "activeTab",
         "https://raw.githubusercontent.com/*",
         "https://i.imgur.com/",
         "https://www.google.com/"

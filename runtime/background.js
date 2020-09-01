@@ -9,7 +9,7 @@ chrome.runtime.onInstalled.addListener(function(ev) {
             periodInMinutes: 1440
         });
     } else if (ev.reason === "update") {
-        showNotification("Updated successfully", "You have updated Countdown extenstion successfully");
+        // showNotification("Updated successfully", "You have updated Countdown extenstion successfully");
     }
 });
 

@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+#countdown_content {
+    position: fixed;
+    z-index: 10000;
+    top: 35%;
+    left: 10px;
+    width: 100px;
+    height: 100px;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: #ff1493e6;
+    box-shadow: #ff2b9ea3 0 0px 20px 5px;
+    transition: all .5s;
+}
+
+#countdown_content.active {
+    box-shadow: none;
+}
+
+#countdown_content h1 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 30px;
+    color: white;
+}
+
+#countdown_content span {
+    font-size: 30px;
+    color: #FFC107;
+}
+
+#delete_zone {
+    position: fixed;
+    z-index: 10000;
+    bottom: -150px;
+    left: 0;
+    width: 100vw;
+    height: 150px;
+    background: linear-gradient(transparent 10%, white 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .5s;
+}
+
+#delete_zone.no_hidden {
+    bottom: 0;
+}
+
+#delete_zone>p {
+    font-family: 'Permanent Marker', cursive;
+    padding: 10px;
+    border: 2px crimson dotted;
+    width: 40%;
+    text-align: center;
+    font-weight: 800;
+    color: crimson;
+    transition: all .5s;
+}
+
+#delete_zone.active>p {
+    padding: 10px;
+    background: salmon;
+    color: white;
+    width: 50%;
+}

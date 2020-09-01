@@ -41,7 +41,7 @@ $text-color-white: white;
             &.settings_section {
                 ul {
                     box-shadow: #cacaca 0 0 10px 0px;
-                    color: $pink-strong;
+                    color: $pink-strong !important;
                     background-color: white;
                 }
             }
@@ -59,8 +59,13 @@ $text-color-white: white;
                 height: 100%;
                 border: none;
                 background: none;
+                text-decoration: none;
+                color: $pink-strong;
                 &:focus {
                     outline: none;
+                }
+                &:hover {
+                    color: $text-color-white;
                 }
             }
             li {

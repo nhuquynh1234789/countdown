@@ -58,7 +58,7 @@
 .app nav > div.settings_section ul {
   -webkit-box-shadow: #cacaca 0 0 10px 0px;
           box-shadow: #cacaca 0 0 10px 0px;
-  color: #FF3D77;
+  color: #FF3D77 !important;
   background-color: white;
 }
 
@@ -80,11 +80,18 @@
   height: 100%;
   border: none;
   background: none;
+  text-decoration: none;
+  color: #FF3D77;
 }
 
 .app nav ul a:focus,
 .app nav ul button:focus {
   outline: none;
+}
+
+.app nav ul a:hover,
+.app nav ul button:hover {
+  color: white;
 }
 
 .app nav ul li {
