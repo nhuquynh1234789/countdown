@@ -1,14 +1,20 @@
 {
     "manifest_version": 2,
-    "name": "__MSG_exName__",
+    "name": "__MSG_full_name__",
+    "short_name": "__MSG_short_name__",
     "version": "0.0.1",
 
     "default_locale": "en",
-    "description": "__MSG_exDescription__",
+    "description": "__MSG_description__",
+
     "icons": {
         "16": "assets/images/favicon.png",
         "48": "assets/images/favicon.png",
         "128": "assets/images/favicon.png"
+    },
+
+    "omnibox": {
+        "keyword": "aaron"
     },
 
     "browser_action": {
@@ -17,9 +23,10 @@
             "24": "assets/images/favicon.png",
             "32": "assets/images/favicon.png"
         },
-        "default_title": "__MSG_exName__",
+        "default_title": "__MSG_short_name__",
         "default_popup": "popup/popup.html"
     },
+
     "background": {
         "scripts": [
             "modules/core.js",
@@ -27,16 +34,34 @@
         ],
         "persistent": false
     },
-    "chrome_url_overrides": {
-        "newtab": "inject/new_tab/overrideNewtabPage.html"
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "css": [
+            "inject/all_tabs/content.css"
+        ],
+        "js": ["modules/core.js",
+            "inject/all_tabs/content.js"
+        ]
+    }],
+
+    "options_page": "options/options.html",
+    "options_ui": {
+        "page": "options/options.html",
+        "open_in_tab": true
     },
+    "homepage_url": "https://github.com/NghiaCaNgao/countdown",
+
     "permissions": [
         "storage",
         "notifications",
         "contextMenus",
         "alarms",
+        "activeTab",
         "https://raw.githubusercontent.com/*",
         "https://i.imgur.com/",
         "https://www.google.com/"
-    ]
+    ],
+    "chrome_url_overrides": {
+        "newtab": "inject/new_tab/overrideNewtabPage.html"
+    }
 }

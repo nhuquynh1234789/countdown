@@ -39,56 +39,62 @@ function isVaildImageUrl(url) {
 
 async function updateEndTime() {
     let isCheck = switch_time_server.checked;
-    let data = await getLocalData();
+    let dataTM = await core.getLocalData("time")
+    let dataST = await core.getLocalData("settings")
 
     // if user turns on sync time setting, load data from server
     if (isCheck) {
-        await processDataTM();
-        TIME_MARK = (await getLocalData()).end_time;
-        data.end_time = TIME_MARK;
+        await core.processDataTM();
+        TIME_MARK = (await core.getLocalData("time")).end_time;
+        dataTM.end_time = TIME_MARK;
         input_end_time.valueAsNumber = TIME_MARK;
     } else {
         // if not set TIME_MARK as custom settings
         TIME_MARK = input_end_time.valueAsNumber;
-        data.end_time = TIME_MARK;
+        dataTM.end_time = TIME_MARK;
     }
-    data.settings.is_time_server = isCheck;
+    dataST.time_settings.is_time_server = isCheck;
+    dataST.lastUpdate = Date.now();
     input_end_time.disabled = isCheck;
-    setLocalData(data);
+    core.setLocalData("time", dataTM);
+    core.setLocalData("settings", dataST);
 }
 
 async function updateStaticImage() {
     let isCheck = switch_static_image.checked;;
-    let data = await getLocalData();
+    let dataUI = await core.getLocalData("ui");
+    let dataST = await core.getLocalData("settings");
 
     // if user turn on static image settings, use custom url image
     if (isCheck) {
         if (input_image_file.files.length > 0) {
-            data.settings.is_static_image_device = !0;
-            data.ui_daily.background.url = input_image_file.files[0].name;
+            dataST.ui_setting.is_static_image_device = !0;
+            dataST.lastUpdate = Date.now();
+            dataUI.ui_daily.background.url = input_image_file.files[0].name;
+            dataUI.ui_daily.lastUpdate = Date.now();
         } else {
             let isValid = await isVaildImageUrl(input_static_image_url.value);
             if (isValid) {
-                data.settings.is_static_image_device = !1;
-                data.ui_daily.background.url = input_static_image_url.value;
+                dataST.ui_setting.is_static_image_device = !1;
+                dataUI.ui_daily.background.url = input_static_image_url.value;
             } else {
                 alert(renderLangJs("_error_invaild_url"));
             }
         }
 
     } else {
-        await processDataUI();
+        await core.processDataUI();
     }
-    data.settings.is_static_image = isCheck;
-    await setLocalData(data);
+    dataST.ui_setting.is_static_image = isCheck;
+    core.setLocalData("ui", dataUI);
+    core.setLocalData("settings", dataST);
     input_static_image_url.disabled = !isCheck;
     input_image_file.disabled = !isCheck;
 }
 
 async function applyDataUI() {
-    let data = await getLocalData();
-    let dataUI = data.ui_daily;
-    let dataST = data.settings;
+    let dataUI = (await core.getLocalData("ui")).ui_daily;
+    let dataST = await core.getLocalData("settings");
     let link = dataUI.background.url;
     let quote = dataUI.quote.text;
 
@@ -102,7 +108,7 @@ async function applyDataUI() {
     input_static_image_url.disabled = !dataST.is_static_image;
     input_image_file.disabled = !dataST.is_static_image;
 
-    if (data.settings.is_static_image_device) {
+    if (dataST.ui_setting.is_static_image_device) {
         let img_device = window.localStorage.getItem("device_image");
         background.style.backgroundImage = `url("${img_device}")`;
     } else {
@@ -114,8 +120,8 @@ async function applyDataUI() {
 
 async function applyCountdown() {
     // update TIME_MARK const
-    if (TIME_MARK == void 0) processDataTM();
-    TIME_MARK = (await getLocalData()).end_time;
+    if (TIME_MARK == void 0) core.processDataTM();
+    TIME_MARK = (await core.getLocalData("time")).end_time;
 
     // start countdown
     countdown();
@@ -125,7 +131,7 @@ async function applyCountdown() {
 }
 
 function countdown() {
-    let now = (new Date).getTime();
+    let now = Date.now();
     let remain = Math.round((TIME_MARK - now) / 1000);
 
     if (remain >= 0) {
@@ -148,8 +154,8 @@ function countdown() {
 
 async function applyAddBookmark() {
     // Fill bookmark on screen
-    let dataBM = (await getLocalData()).bookmark;
-    dataBM.forEach(element => {
+    let dataBM = await core.getLocalData("bookmarks")
+    dataBM.content.forEach(element => {
         createBookmark(element);
     });
 }
@@ -168,19 +174,20 @@ async function addBookmark() {
     // create new bookmark
     let title = input_bookmark_title.value;
     let url = input_bookmark_url.value;
-    if (isVaildInput(title, url)) {
+    if (core.isVaildInput(title, url)) {
         let icon = `https://www.google.com/s2/favicons?sz=64&domain_url=${url}`;
         let properties = {
             title,
             url,
             icon,
-            id: generateID(6)
+            id: core.generateID(6)
         }
         createBookmark(properties);
 
-        let data = await getLocalData();
-        data.bookmark.push(properties);
-        await setLocalData(data);
+        let dataBM = await core.getLocalData("bookmarks");
+        dataBM.lastUpdate = Date.now();
+        dataBM.content.push(properties);
+        core.setLocalData("bookmarks", dataBM);
 
         //refresh input field
         input_bookmark_url.value = "";
@@ -218,17 +225,18 @@ function createBookmark(el) {
 }
 
 async function removeBookmark(id) {
-    let data = await getLocalData();
+    let dataBM = await core.getLocalData("bookmarks");
     let index = -1;
-    for (i = 0; i < data.bookmark.length; i++) {
-        if (data.bookmark[i].id == id) {
+    for (i = 0; i < dataBM.content.length; i++) {
+        if (dataBM.content[i].id == id) {
             index = i;
             break;
         }
     }
     if (index > -1) {
-        data.bookmark.splice(index, 1);
-        await setLocalData(data);
+        dataBM.content.splice(index, 1);
+        dataBM.lastUpdate = Date.now();
+        core.setLocalData("bookmark", dataBM);
     } else return false;
     return true;
 }
@@ -259,8 +267,6 @@ input_end_time.addEventListener("change", async function() {
     await updateEndTime();
 });
 
-
-
 input_image_file.addEventListener("change", async function() {
     if (this.files.length > 0) {
         let fileReader = new FileReader();
@@ -284,15 +290,15 @@ btn_ok_add_bookmark.addEventListener("click", async function() {
 });
 btn_sync_time.addEventListener("click", async function() {
     this.innerHTML = renderLangJs("_syncing_time");
-    await processDataTM();
-    TIME_MARK = (await getLocalData()).end_time;
+    await core.processDataTM();
+    TIME_MARK = (await core.getLocalData("time")).end_time;
     this.innerHTML = renderLangJs("_sync_time_completed");
 });
 
 
 
 async function start() {
-    await loadData();
+    await core.loadData();
     await applyAddBookmark();
     await applyCountdown();
     await applyDataUI();

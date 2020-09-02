@@ -1,8 +1,11 @@
 {
-    "exName": {
+    "full_name": {
+        "message": "Countdown to uni"
+    },
+    "short_name": {
         "message": "Countdown"
     },
-    "exDescription": {
+    "description": {
         "message": "Countdown of national high school exam"
     },
     "exTitle": {

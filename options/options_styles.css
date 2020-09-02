@@ -1,0 +1,240 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Bungee', cursive;
+}
+
+.app {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-image: url("http://thuthuatphanmem.vn/uploads/2017/11/05/hinh-nen-4k-dep-9_124944.jpg");
+}
+
+.app nav {
+  width: 250px;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #ffffffcf;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.app nav > div {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.app nav > div.contact {
+  color: #7d7aa2;
+}
+
+.app nav > div.settings_section ul {
+  -webkit-box-shadow: #cacaca 0 0 10px 0px;
+          box-shadow: #cacaca 0 0 10px 0px;
+  color: #FF3D77 !important;
+  background-color: white;
+}
+
+.app nav ul {
+  width: 100%;
+  list-style-type: none;
+  text-decoration: none;
+  border-radius: 7px;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+
+.app nav ul a,
+.app nav ul button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  text-decoration: none;
+  color: #FF3D77;
+}
+
+.app nav ul a:focus,
+.app nav ul button:focus {
+  outline: none;
+}
+
+.app nav ul a:hover,
+.app nav ul button:hover {
+  color: white;
+}
+
+.app nav ul li {
+  height: 50px;
+  border-radius: 7px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.app nav ul li span {
+  height: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.app nav ul li .icon {
+  width: 50px;
+  min-width: 50px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 1.5em;
+}
+
+.app nav ul li .title {
+  margin-left: 10px;
+}
+
+.app nav ul li:hover {
+  color: white;
+  background-color: #f67e7d;
+}
+
+.app nav ul li:hover .icon {
+  background-color: #FF3D77;
+}
+
+.app nav ul:hover {
+  -webkit-box-shadow: #cacaca 0 0 10px 0px;
+          box-shadow: #cacaca 0 0 10px 0px;
+  background-color: white;
+}
+
+.app nav.collapse {
+  width: 50px;
+  padding: 0;
+  background-color: #ffffff;
+}
+
+.app nav.collapse > div {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  padding: 0;
+}
+
+.app nav.collapse > div.settings_section ul {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.app nav.collapse > div ul {
+  border-radius: 0;
+}
+
+.app nav.collapse > div ul li {
+  border-radius: 0px;
+}
+
+.app nav.collapse > div ul:hover {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.app .board {
+  width: 100%;
+  padding-top: 100px;
+  max-height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.app .board .sec {
+  -webkit-box-shadow: #6c6c6c 0 0 16px 0px;
+          box-shadow: #6c6c6c 0 0 16px 0px;
+  margin: 50px auto;
+  width: 50%;
+  border-radius: 7px;
+  background-color: white;
+  overflow: hidden;
+}
+
+.app .board .sec header {
+  background-color: #f67e7d;
+  color: white;
+  padding-left: 10px;
+}
+
+.app .board .sec > div {
+  padding: 10px;
+}
+
+.app .board .sec > div > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  color: #FF3D77;
+  margin-bottom: 5px;
+}
+
+.app .board .sec > div > div input[type="text"] {
+  width: 40%;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 700px;
+  text-align: center;
+  color: #4b4455;
+  background-color: #f1f3f4;
+  border-radius: 7px;
+  border: white 2px solid;
+  padding: 0 10px;
+}
+
+.app .board .sec > div > div input[type="text"]:focus {
+  outline: none;
+  background-color: #e1e6f9;
+  border: #b5c4fa 2px solid;
+}
+
+@media (max-width: 850px) {
+  .board {
+    padding-top: 50px !important;
+  }
+  .board .sec {
+    margin: 50px auto !important;
+    width: 80% !important;
+  }
+}
+/*# sourceMappingURL=options_styles.css.map */
