@@ -30,7 +30,7 @@ class core {
         switch (type) {
             case "ui_update":
                 {
-                    lastUpdate = (await this.getLocalData("ui")).lastUpdateData;
+                    lastUpdate = (await this.getLocalData("ui")).lastUpdate;
                     if (window.localStorage.getItem("ui") == void 0) lastUpdate = 0;
                     break;
                 }
@@ -41,7 +41,7 @@ class core {
                 }
             case "time_mark":
                 {
-                    lastUpdate = (await this.getLocalData("time")).lastUpdateData;
+                    lastUpdate = (await this.getLocalData("time")).lastUpdate;
                     if (window.localStorage.getItem("time_mark") == void 0) lastUpdate = 0;
                     break;
                 }
@@ -65,7 +65,7 @@ class core {
 
     static rewriteData() {
         let ui = {
-            lastUpdateData: 0,
+            lastUpdate: 0,
             ui_daily: {
                 lastUpdate: 0,
                 background: {
@@ -78,13 +78,13 @@ class core {
         }
 
         let time = {
-            lastUpdateData: 0,
+            lastUpdate: 0,
             // end of countdown
             end_time: 0,
         }
 
         let bookmarks = {
-            lastUpdateData: 0,
+            lastUpdate: 0,
             content: [{
                     id: 377672,
                     title: "FB",
@@ -163,7 +163,7 @@ class core {
             window.localStorage.setItem("ui", JSON.stringify(dataUI));
             // Update last update timestamp
             let data = await this.getLocalData("ui");
-            data.lastUpdateData = Date.now();
+            data.lastUpdate = Date.now();
 
             this.setLocalData("ui", data);
             return dataUI;
@@ -178,7 +178,7 @@ class core {
             window.localStorage.setItem("time_mark", JSON.stringify(dataTM));
             // Update last update timestamp
             let data = await this.getLocalData("time");
-            data.lastUpdateData = Date.now();
+            data.lastUpdate = Date.now();
 
             this.setLocalData("time", data);
             return dataTM;

@@ -54,6 +54,7 @@ async function updateEndTime() {
         dataTM.end_time = TIME_MARK;
     }
     dataST.time_settings.is_time_server = isCheck;
+    dataST.lastUpdate = Date.now();
     input_end_time.disabled = isCheck;
     core.setLocalData("time", dataTM);
     core.setLocalData("settings", dataST);
@@ -68,7 +69,9 @@ async function updateStaticImage() {
     if (isCheck) {
         if (input_image_file.files.length > 0) {
             dataST.ui_setting.is_static_image_device = !0;
+            dataST.lastUpdate = Date.now();
             dataUI.ui_daily.background.url = input_image_file.files[0].name;
+            dataUI.ui_daily.lastUpdate = Date.now();
         } else {
             let isValid = await isVaildImageUrl(input_static_image_url.value);
             if (isValid) {
@@ -182,6 +185,7 @@ async function addBookmark() {
         createBookmark(properties);
 
         let dataBM = await core.getLocalData("bookmarks");
+        dataBM.lastUpdate = Date.now();
         dataBM.content.push(properties);
         core.setLocalData("bookmarks", dataBM);
 
@@ -231,6 +235,7 @@ async function removeBookmark(id) {
     }
     if (index > -1) {
         dataBM.content.splice(index, 1);
+        dataBM.lastUpdate = Date.now();
         core.setLocalData("bookmark", dataBM);
     } else return false;
     return true;

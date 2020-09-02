@@ -74,6 +74,7 @@ async function setAllDays(url) {
     let dataST = await core.getLocalData("settings");
     dataST.ui_setting.is_static_image = !0;
     dataST.ui_setting.is_static_image_device = !1;
+    dataST.lastUpdate = Date.now();
     dataUI.ui_daily.background.url = url;
     core.setLocalData("ui", dataUI);
     core.setLocalData("settings", dataST);
