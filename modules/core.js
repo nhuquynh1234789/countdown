@@ -1,194 +1,257 @@
-// Generate ID by number 
-function generateID(length) {
-    let id = ""
-    if (typeof(length) == "number" && length >= 0) {
-        for (i = 1; i <= length; i++) {
-            id += Math.round(Math.random() * 10).toString();
+class core {
+    static generateID(length) { // Generate ID by number
+        let id = "";
+        if (typeof(length) == "number" && length >= 0) {
+            for (i = 1; i <= length; i++) {
+                id += Math.round(Math.random() * 10).toString();
+            }
+            return id;
+        } else return;
+    }
+
+    static isVaildInput(title, url) { // Check user input info befor creating bookmark
+        if (title.trim() == "" || url.trim() == "") {
+            alert(renderLangJs("_error_input_empty"));
+            return false
         }
-        return id;
-    } else return void 0
-}
-
-
-// Check user input info befor creating bookmark
-function isVaildInput(title, url) {
-    if (title.trim() == "" || url.trim() == "") {
-        alert(renderLangJs("_error_input_empty"));
-        return false
-    }
-    if (url.search(/chrome:\/\//g) >= 0) {
-        alert(renderLangJs("_error_input_chrome"));
-        return false;
-    }
-    if (url.search(/https?:\/\//g) < 0) {
-        alert(renderLangJs("_error_input_http"));
-        return false;
-    }
-    return true;
-}
-
-// Check whether data is out of date
-async function isOldData(type, compareByDays) {
-    let lastUpdate = 0;
-    switch (type) {
-        case "ui_update":
-            {
-                lastUpdate = (await getLocalData()).ui.lastUpdate;
-                if (window.localStorage.getItem("ui") == void 0) {
-                    lastUpdate = 0;
-                }
-                break;
-            }
-        case "ui_daily":
-            {
-                lastUpdate = (await getLocalData()).ui_daily.lastUpdate;
-                break;
-            }
-        case "time_mark":
-            {
-                lastUpdate = (await getLocalData()).time_mark.lastUpdate;
-                if (window.localStorage.getItem("time_mark") == void 0) {
-                    lastUpdate = 0;
-                }
-                break;
-            }
-        default:
+        if (url.search(/chrome:\/\//g) >= 0) {
+            alert(renderLangJs("_error_input_chrome"));
             return false;
+        }
+        if (url.search(/https?:\/\//g) < 0) {
+            alert(renderLangJs("_error_input_http"));
+            return false;
+        }
+        return true;
     }
 
-    if (type == "ui_daily") {
-        // if next to new day, return true
-        let DayOfNow = (new Date()).getDate();
-        let DayOfLastUpdate = (new Date(lastUpdate)).getDate();
-        if (DayOfNow != DayOfLastUpdate) return true;
-        else false
-    } else {
-        let now = (new Date).getTime();
-        let distance = Math.round((now - lastUpdate) / 1000);
-        if ((distance >= compareByDays * 24 * 60 * 60) || (distance < 0)) return true;
-        else return false;
+    static async isOldData(type, distanceByDays) { // Check whether data is out of date
+        let lastUpdate = 0;
+        switch (type) {
+            case "ui_update":
+                {
+                    lastUpdate = (await this.getLocalData("ui")).lastUpdateData;
+                    if (window.localStorage.getItem("ui") == void 0) lastUpdate = 0;
+                    break;
+                }
+            case "ui_daily":
+                {
+                    lastUpdate = (await this.getLocalData("ui")).ui_daily.lastUpdate;
+                    break;
+                }
+            case "time_mark":
+                {
+                    lastUpdate = (await this.getLocalData("time")).lastUpdateData;
+                    if (window.localStorage.getItem("time_mark") == void 0) lastUpdate = 0;
+                    break;
+                }
+            default:
+                return false;
+        }
+
+        if (type == "ui_daily") {
+            // if next to new day, return true
+            let DayOfNow = (new Date()).getDate();
+            let DayOfLastUpdate = (new Date(lastUpdate)).getDate();
+            if (DayOfNow != DayOfLastUpdate) return true;
+            else false
+        } else {
+            let now = Date.now();
+            let distance = Math.round((now - lastUpdate) / 1000);
+            if ((distance >= distanceByDays * 24 * 60 * 60) || (distance < 0)) return true;
+            else return false;
+        }
     }
-}
 
-// Set data to extension storage
-function setLocalData(data) {
-    chrome.storage.sync.set({ data });
-};
+    static rewriteData() {
+        let ui = {
+            lastUpdateData: 0,
+            ui_daily: {
+                lastUpdate: 0,
+                background: {
+                    url: "",
+                },
+                quote: {
+                    text: ""
+                }
+            }
+        }
 
-// Get data from extension storage
-async function getLocalData() {
-    return new Promise((resolve, reject) => {
-        chrome.storage.sync.get(function(data) {
-            resolve(data.data);
+        let time = {
+            lastUpdateData: 0,
+            // end of countdown
+            end_time: 0,
+        }
+
+        let bookmarks = {
+            lastUpdateData: 0,
+            content: [{
+                    id: 377672,
+                    title: "FB",
+                    url: "https://www.facebook.com/",
+                    icon: "https://www.google.com/s2/favicons?sz=64&domain_url=fb.com"
+                },
+                {
+                    id: 231665,
+                    title: "Google",
+                    url: "https://www.google.com.vn",
+                    icon: "https://www.google.com/s2/favicons?sz=64&domain_url=google.com.vn"
+                }
+            ],
+        }
+
+        let settings = {
+            time_settings: {
+                is_time_server: true
+            },
+            ui_setting: {
+                is_static_image: false,
+                is_static_image_device: false
+            }
+        }
+
+        this.setLocalData("ui", ui);
+        this.setLocalData("time", time);
+        this.setLocalData("bookmarks", bookmarks);
+        this.setLocalData("settings", settings);
+    }
+
+    static setLocalData(type, data) { //set data
+        if (type == "ui") chrome.storage.sync.set({ ui: data });
+        else if (type == "time") chrome.storage.sync.set({ time: data });
+        else if (type == "bookmarks") chrome.storage.sync.set({ bookmarks: data });
+        else if (type == "settings") chrome.storage.sync.set({ settings: data });
+    };
+
+    // Get data from extension storage
+    static async getLocalData(type) {
+        return new Promise((resolve, reject) => {
+            if (type == "all") {
+                chrome.storage.sync.get(function(data) {
+                    resolve(data);
+                });
+            } else {
+                chrome.storage.sync.get(type, function(data) {
+                    resolve(data[type]);
+                });
+            }
         });
-    });
-}
-
-async function getData(type) {
-    let result;
-    switch (type) {
-        case "ui":
-            {
-                result = await fetch("https://raw.githubusercontent.com/NghiaCaNgao/countdown/master/data.json");
-                break;
-            }
-        case "time_mark":
-            {
-                result = await fetch("https://raw.githubusercontent.com/NghiaCaNgao/countdown/master/time_mark.json");
-                break;
-            }
     }
-    if (result.ok) return result.json();
-    else return Promise.reject(result.statusText);
-}
 
-async function getDataUI() {
-    let dataUI = await getData("ui");
-    if (dataUI != void 0) {
+    static async fetchData(type) {
+        let result;
+        switch (type) {
+            case "ui":
+                {
+                    result = await fetch("https://raw.githubusercontent.com/NghiaCaNgao/countdown/master/data.json");
+                    break;
+                }
+            case "time_mark":
+                {
+                    result = await fetch("https://raw.githubusercontent.com/NghiaCaNgao/countdown/master/time_mark.json");
+                    break;
+                }
+        }
+        if (result.ok) return result.json();
+        else return Promise.reject(result.statusText);
+    }
 
-        // Save fetched data to brower local storage
-        window.localStorage.setItem("ui", JSON.stringify(dataUI));
+    static async getDataUI() {
+        let dataUI = await this.fetchData("ui");
+        if (dataUI != void 0) {
+            // Save fetched data to browser local storage
+            window.localStorage.setItem("ui", JSON.stringify(dataUI));
+            // Update last update timestamp
+            let data = await this.getLocalData("ui");
+            data.lastUpdateData = Date.now();
+
+            this.setLocalData("ui", data);
+            return dataUI;
+        }
+        return;
+    }
+
+    static async getDataTimeMark() {
+        let dataTM = await this.fetchData("time_mark");
+        if (dataTM != void 0) {
+            // Save fetched data to brower local storage
+            window.localStorage.setItem("time_mark", JSON.stringify(dataTM));
+            // Update last update timestamp
+            let data = await this.getLocalData("time");
+            data.lastUpdateData = Date.now();
+
+            this.setLocalData("time", data);
+            return dataTM;
+        }
+        return;
+    }
+    static async fixDamagedData(type) {
+        // Check whether data is lost and return full data
+        // type = ui | time_mark
+        let data;
+        let field = window.localStorage.getItem(type);
+        if (field == void 0) {
+            if (type == "time_mark") data = await this.getDataTimeMark();
+            else if (type == "ui") data = await this.getDataUI();
+        } else
+            data = JSON.parse(field);
+        return data;
+    }
+
+    static async processDataUI() {
+        // Update data daily
+        let dataUIRaw = await this.fixDamagedData("ui");
+        let dataUI = await this.getLocalData("ui");
+        let dataST = await this.getLocalData("settings");
+        let data_images = dataUIRaw.images;
+        let data_quotes = dataUIRaw.quotes;
+        let data_ui_daily = dataUI.ui_daily;
+        let data_ui_settings = dataST.ui_setting;
+
         // Update last update timestamp
-        let data = await getLocalData();
-        data.ui.lastUpdate = (new Date).getTime();
+        data_ui_daily.lastUpdate = Date.now();
+        // if static image settings is false, get random an image from local data
+        if (!data_ui_settings.is_static_image)
+            data_ui_daily.background.url = data_images[Math.round(Math.random() * data_images.length)];
+        // get random quote
+        data_ui_daily.quote.text = data_quotes[Math.round(Math.random() * data_quotes.length)];
 
-        setLocalData(data);
-        return dataUI;
+        dataUI.ui_daily = data_ui_daily;
+        dataST.ui_setting = data_ui_settings;
+        this.setLocalData("ui", dataUI);
+        this.setLocalData("settings", dataST);
     }
-    return;
-}
 
-async function getDataTimeMark() {
-    let dataTM = await getData("time_mark");
-    if (dataTM != void 0) {
-
-        // Save fetched data to brower local storage
-        window.localStorage.setItem("time_mark", JSON.stringify(dataTM));
-        // Update last update timestamp
-        let data = await getLocalData();
-        data.time_mark.lastUpdate = (new Date).getTime();
-
-        setLocalData(data);
-        return dataTM;
+    static async processDataTM() {
+        // Update data daily
+        let dataTM = await this.fixDamagedData("time_mark");
+        // save end of countdown to extesion storage
+        let data = await this.getLocalData("time");
+        data.end_time = dataTM.default;
+        this.setLocalData("time", data);
     }
-    return;
-}
-async function checkDamagedData(type) {
-    // Check whether data is lost and return full data
-    // type = ui | time_mark
-    let field = window.localStorage.getItem(type);
-    if (field == void 0) {
-        if (type == "time_mark") data = await getDataTimeMark();
-        else if (type == "ui") data = await getDataUI();
-    } else
-        data = JSON.parse(field);
-    return data;
-}
 
-async function processDataUI() {
-    let dataUI = await checkDamagedData("ui");
-    let data = await getLocalData();
-
-    // Update last update timestamp
-    data.ui_daily.lastUpdate = (new Date).getTime();
-    // if static image settings is false, get random an image from local data
-    if (!data.settings.is_static_image)
-        data.ui_daily.background.url = dataUI.images[Math.round(Math.random() * dataUI.images.length)];
-    // get random quote
-    data.ui_daily.quote.text = dataUI.quotes[Math.round(Math.random() * dataUI.quotes.length)];
-
-    setLocalData(data);
-}
-
-async function processDataTM() {
-    let dataTM = await checkDamagedData("time_mark");
-    // save end of countdown to extesion storage
-    let data = await getLocalData();
-    data.end_time = dataTM.default;
-    setLocalData(data);
-}
-
-async function loadData() {
-    dataST = (await getLocalData()).settings;
-    try {
-        if (await isOldData("ui_update", 60)) {
-            await getDataUI();
-            console.log("a");
-        };
-        if (dataST.is_time_server) {
-            if (await isOldData("time_mark", 1)) {
-                await getDataTimeMark();
-                await processDataTM();
-                console.log("b");
+    static async loadData() {
+        let dataST = await this.getLocalData("settings");
+        try {
+            if (await this.isOldData("ui_update", 60)) {
+                await this.fixDamagedData("ui");
+                console.log("reload data_ui");
             };
+            if (dataST.time_settings.is_time_server) {
+                if (await this.isOldData("time_mark", 1)) {
+                    await this.processDataTM();
+                    console.log("reload data_time");
+                };
+            }
+            if (await this.isOldData("ui_daily", 1)) {
+                await this.processDataUI();
+                await this.processDataTM();
+                console.log("refresh data");
+            }
+        } catch (er) {
+            alert(renderLangJs("_error_load_data"));
+            console.log(er);
         }
-        if (await isOldData("ui_daily", 1)) {
-            await processDataUI();
-            await processDataTM();
-            console.log("c");
-        }
-    } catch (er) {
-        alert(renderLangJs("_error_load_data"));
-        console.log(er);
     }
 }

@@ -55,7 +55,7 @@ async function load() {
 }
 
 async function countdown() {
-    let end = (await getLocalData()).end_time;
+    let end = (await getLocalData("time")).end_time;
     let timeLeft = Math.floor((end - Date.now()) / 1000);
     timeLeft = Math.floor(timeLeft / 86400);
     document.querySelector("#countdown_content h1").innerHTML = `<span>#</span>` + timeLeft.toString();

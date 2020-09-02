@@ -2,18 +2,16 @@
 chrome.runtime.onInstalled.addListener(function(ev) {
     if (ev.reason === "install") {
         clearAllData();
-        createDefaultData();
+        core.rewriteData();
         showNotification("Installed successfully", "You have install Countdown extenstion successfully");
         chrome.alarms.create("daily_infor", {
-            when: Date.now() + 1000,
-            periodInMinutes: 1440
+            when: Date.now() + 2000,
+            periodInMinutes: 120
         });
     } else if (ev.reason === "update") {
-        // showNotification("Updated successfully", "You have updated Countdown extenstion successfully");
+        showNotification("Updated successfully", "You have updated Countdown extenstion successfully");
     }
 });
-
-chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {});
 // --------------------------------------
 
 // Context menu
@@ -56,10 +54,11 @@ chrome.contextMenus.onClicked.addListener(async function(info) {
 
 // Inform daily
 chrome.alarms.onAlarm.addListener(async function() {
-    await loadData();
     let timeRemaining = await getTimeRemaining();
     let quote = await getQuote();
-    showNotification(timeRemaining + " days remaining", quote);
+    console.log(timeRemaining);
+    console.log(quote);
+    showNotification("#" + timeRemaining + "Left", quote);
 });
 // --------------------------------------
 
@@ -70,30 +69,36 @@ function isValidUrl(url) {
     } else return true;
 }
 
-async function setInDay(url) {
-    let data = await getLocalData();
-    data.ui_daily.background.url = url;
-    setLocalData(data);
-}
 async function setAllDays(url) {
-    let data = await getLocalData();
-    data.settings.is_static_image = !0;
-    data.settings.is_static_image_device = !1;
-    data.ui_daily.background.url = url;
-    setLocalData(data);
+    let dataUI = await core.getLocalData("ui");
+    let dataST = await core.getLocalData("settings");
+    dataST.ui_setting.is_static_image = !0;
+    dataST.ui_setting.is_static_image_device = !1;
+    dataUI.ui_daily.background.url = url;
+    core.setLocalData("ui", dataUI);
+    core.setLocalData("settings", dataST);
 }
 
 async function getTimeRemaining() {
-    await processDataTM();
-    let endTime = (await getLocalData()).end_time;
+    let endTime;
+    endTime = (await core.getLocalData("time")).end_time
+    if (endTime == 0) {
+        await core.processDataTM();
+        endTime = (await core.getLocalData("time")).end_time
+    }
     let remaining = Math.floor((endTime - Date.now()) / 1000);
     if (remaining < 0) return "End up";
     else return Math.floor(remaining / 86400).toString();
 }
 
 async function getQuote() {
-    await processDataUI();
-    return (await getLocalData()).ui_daily.quote.text;
+    let quote;
+    quote = (await core.getLocalData("ui")).ui_daily.quote.text;
+    if (quote == "") {
+        await core.processDataUI();
+        quote = (await core.getLocalData("ui")).ui_daily.quote.text
+    }
+    return quote;
 }
 
 function clearNotification(id) {
@@ -104,66 +109,12 @@ function clearAllData() {
     chrome.storage.sync.clear();
 }
 
-function showNotification(title, message, buttons) {
+function showNotification(title, message) {
     let options = {
         "type": "basic",
         "iconUrl": "./assets/images/favicon.png",
         "title": title,
         "message": message,
-        "buttons": buttons
     }
-    console.log(options);
     chrome.notifications.create(options);
 }
-
-async function createDefaultData() {
-    var data = {
-        // ui timestamp
-        ui: {
-            lastUpdate: 0,
-        },
-
-        // daily image and quote
-        ui_daily: {
-            lastUpdate: 0,
-            background: {
-                url: "",
-            },
-            quote: {
-                text: ""
-            },
-        },
-
-        // time mark timestamp
-        time_mark: {
-            lastUpdate: 0,
-        },
-
-        // end of countdown
-        end_time: 0,
-
-        // bookmark 
-        bookmark: [{
-                id: 377672,
-                title: "FB",
-                url: "https://www.facebook.com/",
-                icon: "https://www.google.com/s2/favicons?sz=64&domain_url=fb.com"
-            },
-            {
-                id: 231665,
-                title: "Google",
-                url: "https://www.google.com.vn",
-                icon: "https://www.google.com/s2/favicons?sz=64&domain_url=google.com.vn"
-            }
-        ],
-
-        // settings
-        settings: {
-            is_time_server: true,
-            is_static_image: false,
-            is_static_image_device: false
-        }
-    }
-    await setLocalData(data)
-}
-// --------------------------------------
