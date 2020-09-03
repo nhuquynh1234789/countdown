@@ -140,15 +140,17 @@ class core {
 
     static async fetchData(type) {
         let result;
+        let ui_src = "https://raw.githubusercontent.com/NghiaCaNgao/countdown/master/data/data.json";
+        let time_src = "https://raw.githubusercontent.com/NghiaCaNgao/countdown/master/data/time_mark.json";
         switch (type) {
             case "ui":
                 {
-                    result = await fetch("https://raw.githubusercontent.com/NghiaCaNgao/countdown/master/data.json");
+                    result = await fetch(ui_src);
                     break;
                 }
             case "time_mark":
                 {
-                    result = await fetch("https://raw.githubusercontent.com/NghiaCaNgao/countdown/master/time_mark.json");
+                    result = await fetch(time_src);
                     break;
                 }
         }

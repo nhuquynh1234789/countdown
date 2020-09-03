@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee&family=Pacifico&display=swap");
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    transition: all .5s;
+}
+
+.app .content .text {
+    max-width: 50vw;
+    transition: all .5s;
+    margin: 0 50px 50px 0;
+}
+
+.app .content h1 {
+    font-family: "Bungee", sans-serif;
+}
+
+.app .content p {
+    font-family: "Pacifico", sans-serif;
+}
+
+.app .content .button {
+    margin-top: 50px;
+}
+
+.app .content button {
+    font-family: "Bungee", sans-serif;
+    border: black 2px solid;
+    background: transparent;
+    border-radius: 28px;
+    padding: 0 10px;
+    margin-right: 50px;
+    transition: all .3s;
+    cursor: pointer;
+}
+
+.app .content button:focus {
+    outline: none;
+}
+
+.app .content button:hover {
+    background: black;
+    color: white;
+}

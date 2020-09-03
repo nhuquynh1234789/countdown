@@ -37,10 +37,12 @@
     "content_scripts": [{
         "matches": ["<all_urls>"],
         "css": [
-            "inject/all_tabs/content.css"
+            "inject/all_tabs/content.css",
+            "inject/time_over/index.css"
         ],
         "js": ["modules/core.js",
-            "inject/all_tabs/content.js"
+            "inject/all_tabs/content.js",
+            "inject/time_over/script.js"
         ]
     }],
 
