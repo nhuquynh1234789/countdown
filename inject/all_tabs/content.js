@@ -62,7 +62,3 @@ async function countdown() {
 }
 
 load();
-
-window.addEventListener("visibilitychange", function(ev) {
-    console.log(ev);
-});

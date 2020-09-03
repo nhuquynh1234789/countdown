@@ -28,15 +28,20 @@ class core {
     static async isOldData(type, distanceByDays) { // Check whether data is out of date
         let lastUpdate = 0;
         switch (type) {
-            case "ui_update":
+            case "limit":
                 {
-                    lastUpdate = (await this.getLocalData("ui")).lastUpdate;
-                    if (window.localStorage.getItem("ui") == void 0) lastUpdate = 0;
+                    lastUpdate = (await this.getLocalData("limit_time")).lastUpdate;
                     break;
                 }
             case "ui_daily":
                 {
                     lastUpdate = (await this.getLocalData("ui")).ui_daily.lastUpdate;
+                    break;
+                }
+            case "ui_update":
+                {
+                    lastUpdate = (await this.getLocalData("ui")).lastUpdate;
+                    if (window.localStorage.getItem("ui") == void 0) lastUpdate = 0;
                     break;
                 }
             case "time_mark":
@@ -45,11 +50,12 @@ class core {
                     if (window.localStorage.getItem("time_mark") == void 0) lastUpdate = 0;
                     break;
                 }
+
             default:
                 return false;
         }
 
-        if (type == "ui_daily") {
+        if (type == "ui_daily" || type == "limit") {
             // if next to new day, return true
             let DayOfNow = (new Date()).getDate();
             let DayOfLastUpdate = (new Date(lastUpdate)).getDate();
@@ -110,10 +116,18 @@ class core {
             }
         }
 
+        let limit_time = {
+            lastUpdate: 0,
+            total_time: 0,
+            limit_time: 20,
+            isSkip: true
+        }
+
         this.setLocalData("ui", ui);
         this.setLocalData("time", time);
         this.setLocalData("bookmarks", bookmarks);
         this.setLocalData("settings", settings);
+        this.setLocalData("limit_time", limit_time);
     }
 
     static setLocalData(type, data) { //set data
@@ -121,6 +135,8 @@ class core {
         else if (type == "time") chrome.storage.sync.set({ time: data });
         else if (type == "bookmarks") chrome.storage.sync.set({ bookmarks: data });
         else if (type == "settings") chrome.storage.sync.set({ settings: data });
+        else if (type == "limit_time") chrome.storage.sync.set({ limit_time: data });
+
     };
 
     // Get data from extension storage
@@ -231,6 +247,14 @@ class core {
         let data = await this.getLocalData("time");
         data.end_time = dataTM.default;
         this.setLocalData("time", data);
+    }
+
+    static async processDataLimit() {
+        let dataLI = await this.getLocalData("limit_time");
+        dataLI.lastUpdate = Date.now();
+        dataLI.total_time = 0;
+        dataLI.isSkip = false;
+        this.setLocalData("limit_time", dataLI);
     }
 
     static async loadData() {
