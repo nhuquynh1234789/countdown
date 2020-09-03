@@ -10,8 +10,8 @@
 ## Screenshot
 ![sc_01](https://i.imgur.com/fPZTBfT.png)
 
-### Disclaim
-    - Hình ảnh sử dụng trong ứng dụng được lấy toàn bộ từ trên Internet. Nếu bạn nhận nhấy bất cứ hình ảnh nào có vấn đề về pháp lý, vui lòng liên hệ theo các liên hệ bên dưới.
+## Disclaim
+Hình ảnh sử dụng trong ứng dụng được lấy toàn bộ từ trên Internet. Nếu bạn nhận nhấy bất cứ hình ảnh nào có vấn đề về pháp lý, vui lòng liên hệ theo các liên hệ bên dưới.
     
 ## Liên hệ
 Mọi thắc mắc góp ý xin liên hệ [nghiacangao@gmail.com](nghiacangao@gmail.com)
