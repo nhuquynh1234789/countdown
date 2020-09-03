@@ -11,3 +11,8 @@
   - Tạo popup
   - Context menu cho phép chọn nhanh một ảnh trên mạng
   - Thông báo số ngày còn lại sau mỗi ngày bằng notification alert
+### 0.0.3
+  - Bong bóng thông báo ngày
+  - refactor code
+### 0.0.4
+  - Chặn vào fb nếu quá giờ
