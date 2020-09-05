@@ -4,7 +4,7 @@ const list = [
     "https://www.youtube.com/"
 ];
 
-const STEP = 10; //by second
+const STEP = 1; //by second
 
 var LIMIT_TIME = 3;
 var lastActive = false;
@@ -90,23 +90,27 @@ function activity() {
 }
 
 function checkCycle() {
-    loop = setInterval(isOver, STEP * 1000);
+    loop = setInterval(isOver, STEP * 1000 * 60);
 }
 
 async function init() {
-    if (isRestrictList()) {
-        let isOld = await core.isOldData("limit", 1);
-        if (isOld) await core.processDataLimit();
-        let restrict = await core.getLocalData("limit_time");
-        LIMIT_TIME = restrict.limit_time;
-        totalTime = restrict.total_time;
-        if (restrict.isSkip) {
-            let dataLI = await core.getLocalData("limit_time");
-            dataLI.isSkip = false;
-            core.setLocalData("limit_time", dataLI);
-        } else {
-            if (totalTime >= LIMIT_TIME) block();
-            checkCycle();
+    let dataST = await core.getLocalData("settings");
+    if (dataST.limit_time.isActive) {
+        if (isRestrictList()) {
+            let isOld = await core.isOldData("limit", 1);
+            if (isOld) await core.processDataLimit();
+            let restrict = await core.getLocalData("limit_time");
+            LIMIT_TIME = restrict.limit_time;
+            totalTime = restrict.total_time;
+
+            if (restrict.isSkip) {
+                let dataLI = await core.getLocalData("limit_time");
+                dataLI.isSkip = false;
+                core.setLocalData("limit_time", dataLI);
+            } else {
+                if (totalTime >= LIMIT_TIME) block();
+                checkCycle();
+            }
         }
     }
 }

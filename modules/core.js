@@ -113,6 +113,12 @@ class core {
             ui_setting: {
                 is_static_image: false,
                 is_static_image_device: false
+            },
+            limit_time: {
+                isActive: true
+            },
+            bubble: {
+                isActive: true
             }
         }
 

@@ -61,4 +61,11 @@ async function countdown() {
     document.querySelector("#countdown_content h1").innerHTML = `<span>#</span>` + timeLeft.toString();
 }
 
-load();
+async function loadBuble() {
+    let dataST = await core.getLocalData("settings");
+    if (dataST.bubble.isActive) {
+        await load();
+    }
+}
+
+loadBuble();

@@ -94,6 +94,15 @@
                             <span class="title">Bubble</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="#restriction">
+                            <span class="icon">
+                                <i class="fas fa-ban"></i>
+                            </span>
+                            <span class="title">Bubble</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
 
@@ -147,117 +156,37 @@
             </div>
             <div class="sec" id="time">
                 <header>
-                    <h1>Home</h1>
+                    <h1>Time</h1>
                 </header>
                 <div>
-                    <div>
-                        <span>check</span>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="checkbox">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="checkbox" class="switch">
-                    </div>
                 </div>
             </div>
             <div class="sec" id="ui">
                 <header>
-                    <h1>Home</h1>
+                    <h1>UI</h1>
                 </header>
                 <div>
-                    <div>
-                        <span>check</span>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="checkbox">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="checkbox" class="switch">
-                    </div>
                 </div>
             </div>
             <div class="sec" id="notifications">
                 <header>
-                    <h1>Home</h1>
+                    <h1>Notifications</h1>
                 </header>
                 <div>
-                    <div>
-                        <span>check</span>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="checkbox">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="checkbox" class="switch">
-                    </div>
                 </div>
             </div>
             <div class="sec" id="statistics">
                 <header>
-                    <h1>Home</h1>
+                    <h1>Statistic</h1>
                 </header>
                 <div>
-                    <div>
-                        <span>check</span>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="checkbox">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="checkbox" class="switch">
-                    </div>
                 </div>
             </div>
             <div class="sec" id="note">
                 <header>
-                    <h1>Home</h1>
+                    <h1>Note</h1>
                 </header>
                 <div>
-                    <div>
-                        <span>check</span>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="checkbox">
-                    </div>
-                    <div>
-                        <span>check</span>
-                        <input type="checkbox" class="switch">
-                    </div>
                 </div>
             </div>
             <div class="sec" id="bubble">
@@ -267,31 +196,30 @@
                 <div>
                     <div>
                         <span>Enable bubble icon</span>
-                        <input type="checkbox" class="switch">
+                        <input type="checkbox" class="switch" id="switch_bubble">
+                    </div>
+                </div>
+            </div>
+            <div class="sec" id="restriction">
+                <header>
+                    <h1>Restriction</h1>
+                </header>
+                <div>
+                    <div>
+                        <span>Enable restriction </span>
+                        <input type="checkbox" class="switch" id="switch_restriction">
                     </div>
                     <div>
-                        <span>Show statistics on bubble</span>
-                        <input type="checkbox" class="switch">
-                    </div>
-                    <div>
-                        <span>Color</span>
-                        <input type="checkbox" class="switch">
-                    </div>
-                    <div>
-                        <span>Border</span>
-                        <input type="checkbox" class="switch">
-                    </div>
-                    <div>
-                        <span>Style buble</span>
-                        <input type="radio">
-                        <input type="radio">
-                        <input type="radio">
+                        <span>Time limit (by minutes) </span>
+                        <input type="number" pattern="[0-9]*" disabled id="input_limit_time">
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <script src="/modules/core.js"></script>
     <script src="./option_animation.js"></script>
+    <script src="./option_handle.js"></script>
 </body>
 
 </html>
