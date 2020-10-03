@@ -1,0 +1,61 @@
+{
+
+    "bookmarks": {
+        "lastUpdate": 0,
+        "content": [{
+                "id": 377672,
+                "title": "FB",
+                "url": "https://www.facebook.com/",
+                "icon": "https://www.google.com/s2/favicons?sz=64&domain_url=fb.com"
+            },
+            {
+                "id": 231665,
+                "title": "Google",
+                "url": "https://www.google.com.vn",
+                "icon": "https://www.google.com/s2/favicons?sz=64&domain_url=google.com.vn"
+            }
+        ]
+    },
+    "limit_time": {
+        "domains": [
+            "https://www.facebook.com/",
+            "https://www.instagram.com/",
+            "https://www.youtube.com/"
+        ],
+        "lastUpdate": 0,
+        "total_time": 0,
+        "limit_time": 20,
+        "isSkip": true
+    },
+    "settings": {
+        "time_settings": {
+            "is_time_server": true
+        },
+        "ui_setting": {
+            "is_static_image": false,
+            "is_static_image_device": false
+        },
+        "limit_time": {
+            "isActive": true
+        },
+        "bubble": {
+            "isActive": true
+        }
+    },
+    "time": {
+        "lastUpdate": 0,
+        "end_time": 0
+    },
+    "ui": {
+        "lastUpdate": 0,
+        "ui_daily": {
+            "lastUpdate": 0,
+            "background": {
+                "url": ""
+            },
+            "quote": {
+                "text": ""
+            }
+        }
+    }
+}
